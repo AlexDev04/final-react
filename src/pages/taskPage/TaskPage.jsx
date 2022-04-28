@@ -9,7 +9,7 @@ export const TaskPage = () => {
 
     return(
         <>
-            <TextInput col="red"></TextInput>
+            <TextInput col="disabled"></TextInput>
         </>
 
     )
