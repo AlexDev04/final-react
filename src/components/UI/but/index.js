@@ -1,0 +1,1 @@
+export { But } from './But'

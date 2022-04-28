@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Authorization, TaskList, TaskPage, UserList, UserPage, NotFound } from '../pages';
 import './App.sass'
 
@@ -19,6 +19,7 @@ export const App = () => {
                     <Route path="" element={<UserList />} />
                     <Route path=":id" element={<UserPage />} />
                 </Route>
+                <Route path="/" element={<Navigate to="/tasks" replace />} />
                 <Route path ="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>
