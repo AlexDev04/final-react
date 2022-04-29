@@ -1,0 +1,48 @@
+@import "../../../_styles/templates"
+
+    
+.textArea-red
+    @include emptyTextArea()
+    @include textArea(#FF6161)
+
+    &:invalid
+        outline: none
+
+        &:hover
+            @include textArea(#FF6161)
+
+    &:focus
+        @include redTextAreaActive()
+
+.textArea-green
+    @include emptyTextArea()
+    @include textArea(#5EE48C)
+
+    &:invalid
+        outline: none
+
+        &:hover
+            @include textArea(#5EE48C)
+
+    &:focus
+        @include greenTextAreaActive()
+
+.textArea-purple
+    @include emptyTextArea()
+    @include textArea(#7B61FF)
+
+    &:invalid
+        outline: none
+
+        &:hover
+            @include textArea(#7B61FF)
+
+    &:focus
+        @include purpleTextAreaActive()
+
+.textArea-disabled
+    @include emptyTextArea()
+    color: #CCCCCC
+    background: #B5B5B5
+    box-shadow: inset 0px 0px 2px 1px #B5B5B5
+    

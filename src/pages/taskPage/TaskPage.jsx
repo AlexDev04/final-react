@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput } from "../../components"
+import { TextInput, TextZone } from "../../components"
 
 
 export const TaskPage = () => {
@@ -9,7 +9,8 @@ export const TaskPage = () => {
 
     return(
         <>
-            <TextInput col="disabled"></TextInput>
+            <TextInput col="disabled">no text</TextInput>
+            <TextZone col="red"></TextZone>
         </>
 
     )
