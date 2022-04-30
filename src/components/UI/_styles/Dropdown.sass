@@ -1,4 +1,17 @@
-@import '../../../_styles/templates'
+@import '../../../_styles/vars'
+
+@mixin emptyDropdown()
+    display: flex
+    flex-direction: row
+    align-items: center
+    padding: 5px 10px
+    background: #FFFFFF
+    box-shadow: inset 0px 0px 2px 1px $inner-shadow
+    border-radius: 3px
+
+
+@mixin dropdown()
+    border: 1px solid $primary
 
 .dropdown
     background: #FFFFFF

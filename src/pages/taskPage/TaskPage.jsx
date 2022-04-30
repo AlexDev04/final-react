@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput, TextZone, Dropdown, But } from "../../components"
+import { TextInput, TextZone, Dropdown, But, TaskType, TaskStatus, TaskRank } from "../../components"
 
 
 export const TaskPage = () => {
@@ -9,7 +9,7 @@ export const TaskPage = () => {
 
     return(
         <>
-            <TextInput type="primary"></TextInput>
+            <TaskRank rank="high" />
         </>
 
     )
