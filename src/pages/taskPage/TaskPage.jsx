@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown, Checkbox } from "../../components"
+import { DropdownChb, Checkbox, Dropdown } from "../../components"
 
 
 export const TaskPage = () => {
@@ -9,11 +9,16 @@ export const TaskPage = () => {
 
     return(
         <>
-            <Dropdown name="JS-Libraries">
-                <Checkbox text="React"></Checkbox>
-                <Checkbox text="Vue"></Checkbox>
-                <Checkbox text="Angular"></Checkbox>
+            <Dropdown name="JS libraries">
+                <div>React</div>
+                <div>Vue</div>
+                <div>Angular</div>
             </Dropdown>
+            <DropdownChb name="React parts">
+                <Checkbox text="DOM" />
+                <Checkbox text="Hooks" />
+                <Checkbox text="Router" />
+            </DropdownChb>
         </>
 
     )

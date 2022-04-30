@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Checkbox.sass'
 
 
-export const Checkbox = ({text, className, ticked, handleChange}) => {
+export const Checkbox = ({className, text, ticked, handleChange}) => {
 
     const [clicked, setClicked] = useState(false)
 
@@ -12,7 +12,7 @@ export const Checkbox = ({text, className, ticked, handleChange}) => {
 
     return(
         <div 
-            className={`${className} checkbox`} 
+            className={`checkbox ${className}`}
             text={text}
             name={text}
             onClick={() => {
@@ -20,7 +20,11 @@ export const Checkbox = ({text, className, ticked, handleChange}) => {
                 setClicked(!clicked)
             }}
         >
-            <input type="checkbox" name={text} checked={clicked}></input>
+            <input
+                type="checkbox" 
+                name={text} 
+                checked={clicked}
+            />
             <label htmlFor={text}>{text}</label>
         </div>
 

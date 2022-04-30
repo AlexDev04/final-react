@@ -4,3 +4,39 @@
     display: flex
     align-items: center
 
+    &:hover > label::before
+        border: 1px solid #7B61FF
+
+    input
+        position: absolute
+        z-index: -1
+        opacity: 0
+
+        // &:not(:disabled):not(:checked) + label:hover::before
+        //     border: 1px solid #7B61FF
+
+        &:checked + label::before
+            border: none
+            background-image: url('../../../_images/check.svg')
+
+        &:checked + label
+            color: $primary
+
+        + label
+            display: inline-flex
+            align-items: center
+            user-select: none
+
+            &::before
+                content: ''
+                display: inline-block
+                width: 1em
+                height: 1em
+                flex-shrink: 0
+                flex-grow: 0
+                border: 1px solid $text-color
+                border-radius: 0.25em
+                margin-right: 0.5em
+                background-repeat: no-repeat
+                background-position: center center
+                background-size: 100%
