@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput, TextZone, Dropdown, But, TaskType, TaskStatus, TaskRank } from "../../components"
+import { Dropdown, Checkbox } from "../../components"
 
 
 export const TaskPage = () => {
@@ -10,9 +10,9 @@ export const TaskPage = () => {
     return(
         <>
             <Dropdown name="JS-Libraries">
-                <div>React</div>
-                <div>Vue</div>
-                <div>Angular</div>
+                <Checkbox text="React"></Checkbox>
+                <Checkbox text="Vue"></Checkbox>
+                <Checkbox text="Angular"></Checkbox>
             </Dropdown>
         </>
 

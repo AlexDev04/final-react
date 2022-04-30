@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Checkbox } from "../checkbox";
 import './Dropdown.sass';
 import '../../../_styles/style.sass'
 import closedDropdown from '../../../_images/closedDropdown.svg';
@@ -7,16 +8,8 @@ import openedDropdown from '../../../_images/openedDropdown.svg';
 
 export const Dropdown = ({children, dis, placeholder, name}) => {
 
-    const ChildrenEl = () => 
-        React.Children.map(children, child => 
-            React.cloneElement(child, {
-                className: `${child.props.className} dropdown-content-el ${selected !== undefined? child.props.children === selected.innerHTML && 'dropdown-content-el-active': ''}`
-
-            })
-        );
-
     const [opened, setOpened] = useState(false);
-    const [selected, setSelected] = useState();
+    const [selected, setSelected] = useState([]);
 
     let img;
     switch (opened) {
@@ -33,11 +26,18 @@ export const Dropdown = ({children, dis, placeholder, name}) => {
     }
     // console.log(opened)
 
-    const handleChange = (evt) => {
-        setSelected(evt.target)
-        console.log(evt.target)
+    const handleChange = (value) => {
+        let elNum = selected.indexOf(value);
+        if(elNum !== -1) {
+            setSelected(selected.filter(el => el !== value))
+        }
+        if(elNum === -1){
+            setSelected([...selected, value])
+        }
+
     }
-    console.log(selected)
+    if(selected) console.log(selected)
+
 
     return(
         <div className={opened && 'dropdown'} onClick={handleOpen}>
@@ -45,8 +45,14 @@ export const Dropdown = ({children, dis, placeholder, name}) => {
                 <p>{name}</p>
                 <img src={img} />
             </div>
-            <div className={`dropdown-content ${!opened && 'hidden'}`} onClick={handleChange}>
-                <ChildrenEl />
+            <div className={`dropdown-content ${!opened && 'hidden'}`} >
+                {children.map(child => 
+                    <Checkbox
+                        handleChange={handleChange}
+                        key={child.props.text}
+                        text={child.props.text}
+                    />
+                )}
             </div>
         </div>
     )
