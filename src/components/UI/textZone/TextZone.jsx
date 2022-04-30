@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../_styles/TextZone.sass';
+import './TextZone.sass';
 
 
 export const TextZone = ({type, placeholder, children}) => {
@@ -19,7 +19,7 @@ export const TextZone = ({type, placeholder, children}) => {
 
     return(
         <textarea 
-            className={`textArea-${type}`}
+            className={`textZone-${type}`}
             value={text}
             onChange={handleChange}
             placeholder={placeholder}

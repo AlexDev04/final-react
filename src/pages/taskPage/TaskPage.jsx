@@ -9,7 +9,11 @@ export const TaskPage = () => {
 
     return(
         <>
-            <TaskRank rank="high" />
+            <Dropdown name="JS-Libraries">
+                <div>React</div>
+                <div>Vue</div>
+                <div>Angular</div>
+            </Dropdown>
         </>
 
     )

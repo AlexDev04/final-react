@@ -1,28 +1,53 @@
 import React, { useState } from "react";
-import '../_styles/Dropdown.sass'
+import './Dropdown.sass';
+import '../../../_styles/style.sass'
+import closedDropdown from '../../../_images/closedDropdown.svg';
+import openedDropdown from '../../../_images/openedDropdown.svg';
 
 
-export const Dropdown = ({children, dis, hiddenTxt}) => {
+export const Dropdown = ({children, dis, placeholder, name}) => {
 
-    const [open, setOpen] = useState(false)
+    const ChildrenEl = () => 
+        React.Children.map(children, child => 
+            React.cloneElement(child, {
+                className: `${child.props.className} dropdown-content-el ${selected !== undefined? child.props.children === selected.innerHTML && 'dropdown-content-el-active': ''}`
 
-    const handleClick = () => {
-        setOpen(!open)
+            })
+        );
+
+    const [opened, setOpened] = useState(false);
+    const [selected, setSelected] = useState();
+
+    let img;
+    switch (opened) {
+        case false:
+            img = closedDropdown;
+            break;
+        case true:
+            img = openedDropdown;
+            break;
     }
 
-    console.log(open)
+    const handleOpen = () => {
+        setOpened(!opened)
+    }
+    // console.log(opened)
+
+    const handleChange = (evt) => {
+        setSelected(evt.target)
+        console.log(evt.target)
+    }
+    console.log(selected)
 
     return(
-        <div className={`dropdown ${open && 'dropdown-open'}`}>
-            <select
-                disabled={dis} 
-                className="dropdown-select" 
-                defaultValue={hiddenTxt} 
-                onClick={handleClick}
-            >
-                <option disabled>{hiddenTxt}</option>
-                {children}
-            </select>
+        <div className={opened && 'dropdown'} onClick={handleOpen}>
+            <div className="dropdown-label">
+                <p>{name}</p>
+                <img src={img} />
+            </div>
+            <div className={`dropdown-content ${!opened && 'hidden'}`} onClick={handleChange}>
+                <ChildrenEl />
+            </div>
         </div>
     )
 }

@@ -1,0 +1,41 @@
+@import '../../../_styles/vars'
+
+.dropdown
+    border: 1px solid $primary
+    box-sizing: border-box
+    box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5)
+    border-radius: 3px
+
+    &-label
+        cursor: pointer
+        display: flex
+        flex-flow: row nowrap
+        justify-content: space-between
+        padding: 5px 10px
+        background-color: #FFFFFF
+        border: 1px solid $primary
+        box-sizing: border-box
+        box-shadow: inset 0px 0px 2px 1px $inner-shadow
+        border-radius: 3px
+        margin: 5px
+
+        img
+            margin-left: 10px
+
+        p
+            width: auto
+    
+    &-content
+        margin: 3px 0
+
+        &-el
+            padding: 4px 5.5px
+            cursor: pointer
+
+            &-active
+                background-color: $primary
+                color: $disabled-text
+
+            &:hover
+                background-color: #E6E1FF
+                color: $text-color

@@ -1,0 +1,51 @@
+@import "../../../_styles/templates"
+@import "../../../_styles/vars"
+    
+.textZone-error
+    outline: none
+    @include emptyTextArea()
+    @include textArea($error)
+
+    &:invalid
+        border: none
+
+        &:hover
+            @include textArea($error)
+
+    &:focus
+        @include redTextAreaActive()
+
+.textZone-success
+    outline: none
+    @include emptyTextArea()
+    @include textArea($success)
+
+    &:invalid
+        border: none
+
+        &:hover
+            @include textArea($success)
+
+    &:focus
+        @include greenTextAreaActive()
+
+.textZone-primary
+    outline: none
+    @include emptyTextArea()
+    @include textArea($primary)
+
+    &:invalid
+        border: none
+
+        &:hover
+            @include textArea($primary)
+
+    &:focus
+        @include purpleTextAreaActive()
+
+.textZone-disabled
+    @include emptyTextArea()
+    color: $label-text
+    background: $disabled
+    box-shadow: inset 0px 0px 2px 1px $inner-shadow
+    

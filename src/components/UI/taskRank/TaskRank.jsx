@@ -1,5 +1,5 @@
 import React from "react";
-import '../_styles/TaskRank.sass'
+import './TaskRank.sass'
 import low from '../../../_images/low.svg';
 import mid from '../../../_images/mid.svg';
 import high from '../../../_images/high.svg';

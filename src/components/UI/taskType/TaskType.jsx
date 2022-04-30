@@ -1,5 +1,5 @@
 import React from "react";
-import "../_styles/TaskType.sass"
+import "./TaskType.sass"
 
 
 export const TaskType = ({type}) => {

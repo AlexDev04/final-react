@@ -1,5 +1,5 @@
 import React from "react";
-import'../_styles/But.sass';
+import'./But.sass';
 
 
 export const But = ({type, children}) => {

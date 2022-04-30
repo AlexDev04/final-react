@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../_styles/TextZone.sass';
+import './TextInput.sass';
 
 
 export const TextInput = ({type, placeholder, children}) => {
@@ -19,7 +19,7 @@ export const TextInput = ({type, placeholder, children}) => {
 
     return(
         <input 
-            className={`textArea-${type}`}
+            className={`textInput-${type}`}
             value={text}
             onChange={handleChange}
             placeholder={placeholder}

@@ -1,5 +1,5 @@
 import React from "react";
-import '../_styles/TaskStatus.sass';
+import './TaskStatus.sass';
 
 
 export const TaskStatus = ({status}) => {
