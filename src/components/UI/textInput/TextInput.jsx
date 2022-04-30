@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import '../_styles/TextZone.sass';
 
 
-export const TextInput = ({col, placeholder, children}) => {
+export const TextInput = ({type, placeholder, children}) => {
 
     let dis;
-    col === 'disabled'? dis = true: dis = false;
+    type === 'disabled'? dis = true: dis = false;
 
     if(children === undefined) children = '';
 
@@ -19,7 +19,7 @@ export const TextInput = ({col, placeholder, children}) => {
 
     return(
         <input 
-            className={`textArea-${col}`}
+            className={`textArea-${type}`}
             value={text}
             onChange={handleChange}
             placeholder={placeholder}

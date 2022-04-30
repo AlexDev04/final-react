@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import '../_styles/TextZone.sass';
 
 
-export const TextZone = ({col, placeholder, children}) => {
+export const TextZone = ({type, placeholder, children}) => {
 
     let dis;
-    col === 'disabled'? dis = true: dis = false;
+    type === 'disabled'? dis = true: dis = false;
 
     if(children === undefined) children = '';
 
@@ -19,7 +19,7 @@ export const TextZone = ({col, placeholder, children}) => {
 
     return(
         <textarea 
-            className={`textArea-${col}`}
+            className={`textArea-${type}`}
             value={text}
             onChange={handleChange}
             placeholder={placeholder}

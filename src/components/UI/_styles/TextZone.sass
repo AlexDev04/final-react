@@ -1,48 +1,51 @@
 @import "../../../_styles/templates"
-
+@import "../../../_styles/vars"
     
-.textArea-red
+.textArea-error
+    outline: none
     @include emptyTextArea()
-    @include textArea(#FF6161)
+    @include textArea($error)
 
     &:invalid
-        outline: none
+        border: none
 
         &:hover
-            @include textArea(#FF6161)
+            @include textArea($error)
 
     &:focus
         @include redTextAreaActive()
 
-.textArea-green
+.textArea-success
+    outline: none
     @include emptyTextArea()
-    @include textArea(#5EE48C)
+    @include textArea($success)
 
     &:invalid
-        outline: none
+        border: none
 
         &:hover
-            @include textArea(#5EE48C)
+            @include textArea($success)
 
     &:focus
         @include greenTextAreaActive()
 
-.textArea-purple
+.textArea-primary
+    outline: none
     @include emptyTextArea()
-    @include textArea(#7B61FF)
+    @include textArea($primary)
 
     &:invalid
-        outline: none
+        border: none
 
         &:hover
-            @include textArea(#7B61FF)
+            @include textArea($primary)
 
     &:focus
         @include purpleTextAreaActive()
 
 .textArea-disabled
     @include emptyTextArea()
-    color: #CCCCCC
-    background: #B5B5B5
-    box-shadow: inset 0px 0px 2px 1px #B5B5B5
+    color: $label-text
+    background: $disabled
+    box-shadow: inset 0px 0px 2px 1px $inner-shadow
     
