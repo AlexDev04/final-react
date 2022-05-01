@@ -40,8 +40,8 @@ export const Dropdown = ({children, dis, placeholder, name}) => {
     console.log(selected)
 
     return(
-        <div className={opened && 'dropdown'} onClick={handleOpen}>
-            <div className="dropdown-label">
+        <div className={opened && 'dropdown'} >
+            <div className="dropdown-label" onClick={handleOpen}>
                 <p>{name}</p>
                 <img src={img} />
             </div>
