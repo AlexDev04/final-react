@@ -1,0 +1,27 @@
+@import '../../../_styles/vars'
+
+@mixin status($bgCol, $col )
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+    padding: 2px 10px
+    box-sizing: border-box
+    border-radius: 5px
+    background-color: $bgCol
+    border: 1px solid $col
+    color: $col
+    
+.status-red
+    @include status(#EB4F4F, #6D1313)
+    
+
+.status-yellow
+    @include status(#FFC700,#846F00)
+
+.status-green
+    @include status(#4BD379 , #157536)
+
+.status-default
+    @include status($label-text, $text-color)
+    

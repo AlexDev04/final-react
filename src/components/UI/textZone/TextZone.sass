@@ -1,7 +1,7 @@
 @import "../../../_styles/templates"
 @import "../../../_styles/vars"
     
-.textInput-error
+.textZone-error
     outline: none
     @include emptyTextArea()
     @include textArea($error)
@@ -15,7 +15,7 @@
     &:focus
         @include redTextAreaActive()
 
-.textInput-success
+.textZone-success
     outline: none
     @include emptyTextArea()
     @include textArea($success)
@@ -29,7 +29,7 @@
     &:focus
         @include greenTextAreaActive()
 
-.textInput-primary
+.textZone-primary
     outline: none
     @include emptyTextArea()
     @include textArea($primary)
@@ -43,7 +43,7 @@
     &:focus
         @include purpleTextAreaActive()
 
-.textInput-disabled
+.textZone-disabled
     @include emptyTextArea()
     color: $label-text
     background: $disabled

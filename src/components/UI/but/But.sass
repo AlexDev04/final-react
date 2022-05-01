@@ -1,0 +1,62 @@
+@import '../../../_styles/vars'
+
+@mixin but()
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+    padding: 0px 20px
+    box-sizing: border-box
+    border-radius: 5px
+    color: $default
+
+.but-default
+    @include but()
+    background: $default
+    border: 1px solid #333333
+    color: black
+
+    &:hover
+        background: $default-hov
+
+    &:active
+        background: $default-act
+
+.but-primary
+    @include but()
+    background: $primary
+    border: 1px solid $primary
+
+    &:hover
+        background: $primary-hov
+
+    &:active
+        background: $primary-active
+
+.but-success
+    @include but()
+    background: $success
+    border: 1px solid $success
+
+    &:hover
+        background: $success-hov
+
+    &:active
+        background: $success-act
+
+.but-error
+    @include but()
+    background: $error
+    border: 1px solid $error
+
+    &:hover
+        background: $error-hov
+
+    &:active
+        background: $error-act
+
+.but-disabled
+    @include but()
+    background: $disabled
+    border: 1px solid $disabled
+    color: $disabled-text
