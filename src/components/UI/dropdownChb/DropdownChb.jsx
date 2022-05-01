@@ -22,7 +22,7 @@ export const DropdownChb = ({children, dis, placeholder, name}) => {
     }
 
     const handleOpen = () => {
-        setOpened(!opened)
+        if(!dis) setOpened(!opened)
     }
 
     const handleChange = (value) => {
@@ -39,10 +39,10 @@ export const DropdownChb = ({children, dis, placeholder, name}) => {
 
 
     return(
-        <div className={opened && 'dropdownChb'}>
-            <div className="dropdownChb-label" onClick={handleOpen}>
+        <div className={`${opened && 'dropdownChb'} ${dis && 'dropdownChb-dis'}`}>
+            <div className={!dis && 'dropdownChb-label'} onClick={handleOpen}>
                 <p>{name}</p>
-                <img src={img} />
+                {!dis && <img src={img} />}
             </div>
             <div className={`dropdownChb-content ${!opened && 'hidden'}`} >
                 {children.map(child => 
