@@ -10,7 +10,9 @@ export const UserHeader = () => {
 
     return(
         <section className="userHeader">
-            <div>Малыш Грут</div>
+            <div>
+                <h2>Малыш Грут</h2>
+            </div>
             <div>
                 <But type="default">Добавить задачу</But>
                 <But type="primary">Редактировать</But>
