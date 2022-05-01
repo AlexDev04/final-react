@@ -9,12 +9,12 @@ export const TaskPage = () => {
 
     return(
         <>
-            <Dropdown name="JS libraries">
+            <Dropdown name="JS libraries" dis>
                 <div>React</div>
                 <div>Vue</div>
                 <div>Angular</div>
             </Dropdown>
-            <DropdownChb name="React parts">
+            <DropdownChb name="React parts" dis>
                 <Checkbox text="DOM" />
                 <Checkbox text="Hooks" />
                 <Checkbox text="Router" />
