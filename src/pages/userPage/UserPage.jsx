@@ -1,8 +1,12 @@
 import React from 'react';
+import { UserHeader } from '../../components';
 
 
 export const UserPage = () => {
     return(
-        <p>User page</p>
+        <main className="userPage" >
+            <UserHeader />
+            <div className="content"></div>
+        </main>
     )
 }

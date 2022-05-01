@@ -1,4 +1,5 @@
 export { DropdownChb, Dropdown, TextInput, TextZone, But, TaskStatus, TaskType, TaskRank, Checkbox } from './UI';
 export { MainHeader } from './mainHeader';
-export { Header } from './header';
-export { TaskListItem } from './taskListItem'
+export { TaskHeader } from './taskHeader';
+export { TaskListItem } from './taskListItem';
+export { UserHeader } from './userHeader'
