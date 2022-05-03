@@ -3,6 +3,7 @@
     
 .textZone-error
     outline: none
+    margin: 5px
     @include emptyTextArea()
     @include textArea($error)
 
@@ -10,13 +11,18 @@
         border: none
 
         &:hover
+            margin: 4px
             @include textArea($error)
 
     &:focus
         @include redTextAreaActive()
+    
+    &::-webkit-input-placeholder
+        color: $label-text
 
 .textZone-success
     outline: none
+    margin: 5px
     @include emptyTextArea()
     @include textArea($success)
 
@@ -24,13 +30,18 @@
         border: none
 
         &:hover
+            margin: 4px
             @include textArea($success)
 
     &:focus
         @include greenTextAreaActive()
+        
+    &::-webkit-input-placeholder
+        color: $label-text
 
 .textZone-primary
     outline: none
+    margin: 5px
     @include emptyTextArea()
     @include textArea($primary)
 
@@ -38,14 +49,21 @@
         border: none
 
         &:hover
+            margin: 4px
             @include textArea($primary)
 
     &:focus
         @include purpleTextAreaActive()
+        
+    &::-webkit-input-placeholder
+        color: $label-text
 
 .textZone-disabled
+    margin: 0 5px
     @include emptyTextArea()
     color: $label-text
     background: $disabled
     box-shadow: inset 0px 0px 2px 1px $inner-shadow
     
+    &::-webkit-input-placeholder
+        color: $label-text
