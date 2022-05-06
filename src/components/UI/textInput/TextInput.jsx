@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './TextInput.sass';
 
 
-export const TextInput = ({type, placeholder, children, className, updateData}) => {
+export const TextInput = ({type, placeholder, children, className, updateData, info}) => {
 
     let dis;
     type === 'disabled'? dis = true: dis = false;
@@ -25,6 +25,7 @@ export const TextInput = ({type, placeholder, children, className, updateData}) 
             onChange={handleChange}
             placeholder={placeholder}
             disabled={dis}
+            type={info}
             required
         />
     )

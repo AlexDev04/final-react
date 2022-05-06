@@ -33,9 +33,9 @@ export const Authorization = observer(() => {
             <div className="auth-window">
                 <h2>Авторизация</h2>
                 <p className="placeholder">Логин</p>
-                <TextInput type="primary" updateData={updateLogin}/>
+                <TextInput type="primary" updateData={updateLogin} />
                 <p className="placeholder">Пароль</p>
-                <TextInput type="primary" updateData={updatePassword} />
+                <TextInput type="primary" updateData={updatePassword} info="password" />
                 <But type="success" onClick={handleAuth}>Вход</But>
             </div>
         </section>

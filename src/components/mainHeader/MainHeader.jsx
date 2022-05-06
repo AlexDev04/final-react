@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 
 export const MainHeader = () => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const home = () => {
         navigate('/')

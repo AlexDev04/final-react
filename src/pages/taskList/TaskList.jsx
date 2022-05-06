@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite";
+import { action } from "mobx";
 import React, { useEffect } from "react";
 import { But, Dropdown, TaskHeader, TaskListItem, TextInput, Pager } from "../../components";
 import "./TaskList.sass";
@@ -9,11 +10,11 @@ import { useNavigate } from "react-router";
 export const TaskList = observer(() => {
 
     const navigate = useNavigate()
-    useEffect(() => {
+    useEffect(action(() => {
         if(!store.authorized) {
             navigate('/auth')
         }
-    })
+    }))
 
     console.log(store.authorized)
 

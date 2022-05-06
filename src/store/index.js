@@ -34,6 +34,8 @@ class Store {
         photoUrl: ''
     };
 
+    users=[]
+
     authorized = false;
 
     data = {
@@ -48,6 +50,12 @@ class Store {
                         store.curUser.photoUrl = response.data.photoUrl
                         store.authorized = true
                     })
+            },
+            all() {
+                api.users.all()
+                .then(response => {
+                    response.data.map(el => store.users.push(el))
+                })
             }
         }
     };

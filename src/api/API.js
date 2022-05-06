@@ -7,15 +7,13 @@ const axios = Axios.create({
 export const api = {
     users: {
         all() {
-            return axios.get('users/all').then(response => console.log(response))
+            return axios.get('users/all')
         },
         login(login, password) {
             return axios.post('users/login', {
                 login: login,
                 password: password
             })
-            // .then(response => console.log(response))
-            // .catch(error => console.log(error))
         }
     }
 }
