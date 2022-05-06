@@ -1,8 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
+import './Authorization.sass';
+import { But, TextInput } from '../../components';
+import { store } from '../../store'
+import { useNavigate } from "react-router";
+import { observer } from "mobx-react-lite";
+import { action } from "mobx";
 
 
-export const Authorization = () => {
+export const Authorization = observer(() => {
+
+    const navigate = useNavigate();
+
+    const [authData, setAuthData] = useState({});
+
+    const updateLogin = (value) => {
+        setAuthData({...authData, login: value})
+    };
+
+    const updatePassword = (value) => {
+        setAuthData({...authData, password: value})
+    };
+
+    const handleAuth = action(() => {
+        store.data.users.login(authData)
+    });
+
+    console.log(store.authorized)
+    store.authorized && navigate('/');
+
     return(
-        <p>Authorization</p>
+        <section className="auth">
+            <div className="auth-window">
+                <h2>Авторизация</h2>
+                <p className="placeholder">Логин</p>
+                <TextInput type="primary" updateData={updateLogin}/>
+                <p className="placeholder">Пароль</p>
+                <TextInput type="primary" updateData={updatePassword} />
+                <But type="success" onClick={handleAuth}>Вход</But>
+            </div>
+        </section>
     )
-}
+})

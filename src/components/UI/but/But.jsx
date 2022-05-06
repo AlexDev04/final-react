@@ -2,12 +2,16 @@ import React from "react";
 import'./But.sass';
 
 
-export const But = ({type, children}) => {
+export const But = ({type, children, dis, onClick}) => {
 
-    let dis;
-    type === 'disabled'? dis = true: dis = false;
-
+    if(type === undefined) type = 'default'
     return(
-        <button className={`but-${type}`} disabled={dis}>{children}</button>
+        <button 
+            className={`but-${type}`} 
+            disabled={dis}
+            onClick={onClick}
+        >
+            {children}
+        </button>
     )
 }

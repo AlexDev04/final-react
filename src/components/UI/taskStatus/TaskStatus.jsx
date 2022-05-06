@@ -5,9 +5,9 @@ import './TaskStatus.sass';
 export const TaskStatus = ({status}) => {
 
     let col, text;
-    if(!status || status === 'none') {
+    if(!status || status === 'open') {
         col = 'default';
-        text = 'Нет данных';
+        text = 'Открыто';
     }
     if(status === 'work') {
         col = 'yellow';

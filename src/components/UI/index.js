@@ -7,3 +7,4 @@ export { TaskType } from './taskType';
 export { TaskStatus } from './taskStatus';
 export { TaskRank } from './taskRank';
 export { Checkbox } from './checkbox';
+export { Pager } from './pager'

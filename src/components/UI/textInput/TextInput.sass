@@ -1,8 +1,13 @@
 @import "../../../_styles/templates"
 @import "../../../_styles/vars"
-    
+
+@mixin input()
+    height: 24px
+    margin: 0 5px
+
 .textInput-error
     outline: none
+    @include input()
     @include emptyTextArea()
     @include textArea($error)
 
@@ -10,13 +15,18 @@
         border: none
 
         &:hover
+            margin: 0 4px
             @include textArea($error)
 
     &:focus
         @include redTextAreaActive()
 
+    &::-webkit-input-placeholder
+        color: $label-text
+
 .textInput-success
     outline: none
+    @include input()
     @include emptyTextArea()
     @include textArea($success)
 
@@ -24,12 +34,17 @@
         border: none
 
         &:hover
+            margin: 0 4px
             @include textArea($success)
 
     &:focus
         @include greenTextAreaActive()
 
+    &::-webkit-input-placeholder
+        color: $label-text
+
 .textInput-primary
+    @include input()
     outline: none
     @include emptyTextArea()
     @include textArea($primary)
@@ -38,14 +53,22 @@
         border: none
 
         &:hover
+            margin: 0 4px
             @include textArea($primary)
 
     &:focus
         @include purpleTextAreaActive()
 
+    
+    &::-webkit-input-placeholder
+        color: $label-text
+
 .textInput-disabled
+    @include input()
     @include emptyTextArea()
     color: $label-text
     background: $disabled
     box-shadow: inset 0px 0px 2px 1px $inner-shadow
     
+.textInput-undefined
+    background-color: red

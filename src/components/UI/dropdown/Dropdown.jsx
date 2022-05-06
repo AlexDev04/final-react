@@ -5,7 +5,7 @@ import closedDropdown from '../../../_images/closedDropdown.svg';
 import openedDropdown from '../../../_images/openedDropdown.svg';
 
 
-export const Dropdown = ({children, placeholder, name, dis}) => {
+export const Dropdown = ({children, name, dis, className, val}) => {
 
     const ChildrenEl = () => 
         React.Children.map(children, child => 
@@ -16,7 +16,7 @@ export const Dropdown = ({children, placeholder, name, dis}) => {
         );
 
     const [opened, setOpened] = useState(false);
-    const [selected, setSelected] = useState();
+    const [selected, setSelected] = useState(val);
 
     let img;
     switch (opened) {
@@ -40,9 +40,9 @@ export const Dropdown = ({children, placeholder, name, dis}) => {
     console.log(selected)
 
     return(
-        <div className={`${opened && 'dropdown'} ${dis && 'dropdown-dis'}`} >
-            <div className={!dis && 'dropdown-label'} onClick={handleOpen}>
-                <p>{name}</p>
+        <div className={`${opened && 'dropdown'} ${dis && 'dropdown-dis'} ${className}`} onClick={handleOpen}>
+            <div className={`${!dis && 'dropdown-label'} ${opened && 'dropdown-label-active'} ${selected && 'dropdown-label-active'}`}>
+                <p>{selected || name}</p>
                 {!dis && <img src={img} />}
             </div>
             <div className={`dropdown-content ${!opened && 'hidden'}`} onClick={handleChange}>
