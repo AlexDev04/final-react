@@ -5,7 +5,7 @@ import closedDropdown from '../../../_images/closedDropdown.svg';
 import openedDropdown from '../../../_images/openedDropdown.svg';
 
 
-export const Dropdown = ({children, placeholder, name, dis, className}) => {
+export const Dropdown = ({children, name, dis, className, val}) => {
 
     const ChildrenEl = () => 
         React.Children.map(children, child => 
@@ -16,7 +16,7 @@ export const Dropdown = ({children, placeholder, name, dis, className}) => {
         );
 
     const [opened, setOpened] = useState(false);
-    const [selected, setSelected] = useState();
+    const [selected, setSelected] = useState(val);
 
     let img;
     switch (opened) {

@@ -1,11 +1,14 @@
 import React from "react";
 import { But, TaskStatus } from "../";
+import { useNavigate } from "react-router"
 import './TaskHeader.sass'
 
 
 export const TaskHeader = ({mode}) => {
 
     console.log(mode)
+
+    const navigate = useNavigate();
 
         return(
             <section className="taskHeader">
@@ -15,7 +18,7 @@ export const TaskHeader = ({mode}) => {
                             <h2>Задачи</h2>
                         </div>
                         <div>
-                            <But type="primary" addTask>Добавить задачу</But>
+                            <But type="primary" onClick={() => navigate('/tasks/create')}>Добавить задачу</But>
                         </div>
                     </>
                 }

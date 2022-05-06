@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './TextInput.sass';
 
 
-export const TextInput = ({type, placeholder, children, className}) => {
+export const TextInput = ({type, placeholder, children, className, updateData}) => {
 
     let dis;
     type === 'disabled'? dis = true: dis = false;
@@ -15,6 +15,7 @@ export const TextInput = ({type, placeholder, children, className}) => {
         evt.preventDefault();
         setText(evt.target.value);
         evt.target.focus();
+        updateData(evt.target.value)
     }
 
     return(

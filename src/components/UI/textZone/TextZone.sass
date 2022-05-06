@@ -1,9 +1,12 @@
 @import "../../../_styles/templates"
-@import "../../../_styles/vars"
+@import "../../../_styles/vars"\
+
+@mixin zone()
+    margin: 0 5px
     
 .textZone-error
     outline: none
-    margin: 5px
+    @include zone()
     @include emptyTextArea()
     @include textArea($error)
 
@@ -11,7 +14,7 @@
         border: none
 
         &:hover
-            margin: 4px
+            margin: 0 4px
             @include textArea($error)
 
     &:focus
@@ -22,7 +25,7 @@
 
 .textZone-success
     outline: none
-    margin: 5px
+    @include zone()
     @include emptyTextArea()
     @include textArea($success)
 
@@ -30,7 +33,7 @@
         border: none
 
         &:hover
-            margin: 4px
+            margin: 0 4px
             @include textArea($success)
 
     &:focus
@@ -41,7 +44,7 @@
 
 .textZone-primary
     outline: none
-    margin: 5px
+    @include zone()
     @include emptyTextArea()
     @include textArea($primary)
 
@@ -49,7 +52,7 @@
         border: none
 
         &:hover
-            margin: 4px
+            margin: 0 4px
             @include textArea($primary)
 
     &:focus
@@ -59,7 +62,7 @@
         color: $label-text
 
 .textZone-disabled
-    margin: 0 5px
+    @include zone()
     @include emptyTextArea()
     color: $label-text
     background: $disabled

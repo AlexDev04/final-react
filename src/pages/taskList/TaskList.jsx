@@ -1,9 +1,22 @@
-import React from "react";
-import { But, Dropdown, TaskHeader, TaskListItem, TextInput } from "../../components";
-import "./TaskList.sass"
+import { observer } from "mobx-react-lite";
+import React, { useEffect } from "react";
+import { But, Dropdown, TaskHeader, TaskListItem, TextInput, Pager } from "../../components";
+import "./TaskList.sass";
+import { store } from "../../store";
+import { useNavigate } from "react-router";
 
 
-export const TaskList = () => {
+export const TaskList = observer(() => {
+
+    const navigate = useNavigate()
+    useEffect(() => {
+        if(!store.authorized) {
+            navigate('/auth')
+        }
+    })
+
+    console.log(store.authorized)
+
     return(
         <>
             <TaskHeader mode="taskList" />
@@ -39,12 +52,11 @@ export const TaskList = () => {
                         userName="Малыш Грут"
                         status="test"
                         rank="high"
+                        more
                     />
                 </section>
-                <section className="taskList-pager">
-                    pager
-                </section>
+                <Pager className="taskList-pager" />
             </main>
         </>
     )
-}
+})

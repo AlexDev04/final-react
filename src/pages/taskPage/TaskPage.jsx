@@ -1,17 +1,38 @@
-import React from "react";
-import { useParams } from "react-router";
-import { Dropdown, TaskHeader, TextInput, TextZone, But } from "../../components"
+import React, { useState, useReducer, useEffect } from "react";
+import { useNavigate } from "react-router";
+import { Dropdown, TaskHeader, TextInput, TextZone, But, Modal } from "../../components"
 import "./TaskPage.sass"
+import { action } from "mobx";
+import { observer } from "mobx-react-lite";
+import { modal, store } from "../../store";
 
 
-export const TaskPage = ({mode}) => {
+export const TaskPage = observer(({mode}) => {
 
-    console.log(mode)
+    console.log(mode);
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        if(!store.authorized) {
+            navigate('/auth')
+        }
+    })
+
+    const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+
+    const handleOpen = action(() => {
+        modal.open()
+        forceUpdate()
+        console.log(modal.opened)
+    })
 
     return(
         <>
             <TaskHeader mode={mode} />
             <main className="taskPage">
+
+                {/* Создание и редактирование задачи */}
+                
                 {mode !== 'task' &&
                 <>
                     <section className="taskPage-left">
@@ -37,14 +58,18 @@ export const TaskPage = ({mode}) => {
                         <label>Название</label>
                         <TextInput type="primary" placeholder="Название" />
                         <label>Описание</label>
-                        <TextZone type="primary" placeholder="описание" />
+                        <TextZone type="primary" placeholder="Описание" />
                     </section>
                     <section className="taskPage-right">
                     </section>
                 </>
                 }
+
+                {/* Просмотр задачи */}
+
                 {mode === 'task' && 
                 <>
+                    <Modal />
                     <section className="taskPage-left">
                         <p className="taskPage-placeholder">Исполнитель</p>
                         <p>Евгений Онегин</p>
@@ -60,7 +85,7 @@ export const TaskPage = ({mode}) => {
                         <p>01.12.2021 12:20</p>
                         <p className="taskPage-placeholder">Затрачено времени</p>
                         <p>0 часов 0 минут</p>
-                        <But type="primary">Сделать запись о работе</But>
+                        <But type="primary"  onClick={handleOpen}>Сделать запись о работе</But>
                     </section>
                     <hr />
                     <section className="taskPage-center">
@@ -80,4 +105,4 @@ export const TaskPage = ({mode}) => {
             </main>
         </>
     )
-}
+})
