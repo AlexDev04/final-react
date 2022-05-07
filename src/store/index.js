@@ -9,11 +9,11 @@ class Modal {
     }
 
     open() {
-        this.opened = true
+        modal.opened = true
     }
 
     close() {
-        this.opened = false
+        modal.opened = false
     }
 
 }
@@ -31,7 +31,8 @@ class Store {
         username: '',
         login: '',
         about: '',
-        photoUrl: ''
+        photoUrl: '',
+        password: ''
     };
 
     openedUser = {
@@ -42,7 +43,9 @@ class Store {
         photoUrl: ''
     }
 
-    users=[]
+    users = [];
+
+    tasks = [];
 
     authorized = false;
 
@@ -74,6 +77,13 @@ class Store {
                         store.openedUser.login = response.data.login
                         store.openedUser.about = response.data.about
                         store.openedUser.photoUrl = response.data.photoUrl
+                    })
+            },
+            edit(user) {
+                api.users.edit(user.id, user.login, user.username, user.about, user.photoUrl, store.curUser.password)
+                    .then(response => {
+                        console.log(response);
+                        console.log(user)
                     })
             }
         }

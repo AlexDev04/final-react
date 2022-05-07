@@ -2,8 +2,9 @@ import React, {useEffect, useReducer, useState} from "react";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router"; 
 import { But } from '../';
-import { store } from "../../store";
+import { modal, store } from "../../store";
 import './UserHeader.sass';
+import { action } from "mobx";
 
 export const UserHeader = observer(({mode}) => {
     
@@ -11,7 +12,16 @@ export const UserHeader = observer(({mode}) => {
 
     useEffect(() => setUser(store.openedUser), [store.openedUser])
 
-    console.log(store.openedUser)
+    console.log(store.openedUser.id)
+    console.log(store.curUser.id)
+
+    const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+
+    const handleOpen = action(() => {
+        modal.open()
+        forceUpdate()
+        console.log(modal.opened)
+    })
 
     return(
         <section className="userHeader">
@@ -23,7 +33,7 @@ export const UserHeader = observer(({mode}) => {
                 <div>
                     <But type="default">Добавить задачу</But>
                     {store.openedUser.id === store.curUser.id &&
-                        <But type="primary">Редактировать</But>
+                        <But type="primary" onClick={handleOpen}>Редактировать</But>
                     }
                 </div>
             </>

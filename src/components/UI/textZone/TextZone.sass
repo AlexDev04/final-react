@@ -2,7 +2,6 @@
 @import "../../../_styles/vars"\
 
 @mixin zone()
-    margin: 0 5px
     
 .textZone-error
     outline: none
@@ -14,7 +13,7 @@
         border: none
 
         &:hover
-            margin: 0 4px
+            margin: -1px
             @include textArea($error)
 
     &:focus
@@ -33,7 +32,7 @@
         border: none
 
         &:hover
-            margin: 0 4px
+            margin: -1px
             @include textArea($success)
 
     &:focus
@@ -52,7 +51,7 @@
         border: none
 
         &:hover
-            margin: 0 4px
+            margin: -1px
             @include textArea($primary)
 
     &:focus

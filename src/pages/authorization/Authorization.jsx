@@ -18,14 +18,16 @@ export const Authorization = observer(() => {
     };
 
     const updatePassword = (value) => {
-        setAuthData({...authData, password: value})
+        setAuthData({...authData, password: value});
+        store.curUser.password = value
     };
 
     const handleAuth = action(() => {
         store.data.users.login(authData)
     });
 
-    console.log(store.authorized)
+    console.log(store.authorized);
+    console.log(store.curUser);
     store.authorized && navigate('/');
 
     return(

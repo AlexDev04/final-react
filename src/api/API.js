@@ -17,6 +17,16 @@ export const api = {
         },
         id(id) {
             return axios.get(`users/${id}`)
+        },
+        edit(id, login, username, about, url, password) {
+            return axios.put('users/edit', {
+                id: id,
+                login: login,
+                username: username,
+                about: about,
+                photoUrl: url,
+                password: password,
+            })
         }
     }
 }
