@@ -40,13 +40,15 @@ export const Dropdown = ({children, name, dis, className, val}) => {
     console.log(selected)
 
     return(
-        <div className={`${opened && 'dropdown'} ${dis && 'dropdown-dis'} ${className}`} onClick={handleOpen}>
-            <div className={`${!dis && 'dropdown-label'} ${opened && 'dropdown-label-active'} ${selected && 'dropdown-label-active'}`}>
-                <p>{selected || name}</p>
-                {!dis && <img src={img} />}
-            </div>
-            <div className={`dropdown-content ${!opened && 'hidden'}`} onClick={handleChange}>
-                <ChildrenEl />
+        <div className={`dropdown-outer ${className}`}  >
+            <div className={`${opened && 'dropdown'} ${dis && 'dropdown-dis'}`} onClick={handleOpen}>
+                <div className={`${!dis && 'dropdown-label'} ${opened && 'dropdown-label-active'} ${selected && 'dropdown-label-active'}`}>
+                    <p>{selected || name}</p>
+                    {!dis && <img src={img} />}
+                </div>
+                <div className={`dropdown-content ${!opened && 'hidden'}`} onClick={handleChange}>
+                    <ChildrenEl />
+                </div>
             </div>
         </div>
     )

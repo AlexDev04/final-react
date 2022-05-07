@@ -1,5 +1,4 @@
 import { observer } from 'mobx-react-lite';
-import { action } from 'mobx';
 import React, { useState, useEffect } from 'react';
 import { store } from '../../store';
 import userImg from '../../_images/UserImg.svg';
