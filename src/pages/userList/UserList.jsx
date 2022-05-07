@@ -17,12 +17,16 @@ export const UserList = observer(() => {
         store.data.users.all()
     }, [])
 
+    const handleNav = (id) => {
+        navigate(`/users/${id}`)
+    }
+
     return(
         <>
             <UserHeader mode="userList" />
             <main className="userList">
             <section className="userList-list">
-                {store.users.map(el => <article key={el.id}>{el.username}</article>)}
+                {store.users.map(el => <article key={el.id} onClick={() => handleNav(el.id)}>{el.username}</article>)}
             </section>
                 <Pager className="userList-pager" />
             </main>

@@ -10,9 +10,8 @@ export const UserProfile = observer(() => {
 
     const navigate = useNavigate();
 
-    const [user, setUser] = useState({name: '', img: '', id: ''});
-
-    useEffect(() => setUser({name: store.curUser.username, img: userImg, id: store.curUser.id}), []);
+    const [user, setUser] = useState({username: '', img: '', id: ''});
+    useEffect(() => setUser({username: store.curUser.username, img: userImg, id: store.curUser.id}), [store.authorized]);
 
     const handleUser = () => {
         navigate(`/users/${user.id}`)
@@ -20,7 +19,7 @@ export const UserProfile = observer(() => {
 
     return(
         <div className="userProfile" onClick={handleUser}>
-            <p>{user.name}</p>
+            <p>{user.username}</p>
             <img src={user.img} />
         </div>
     )

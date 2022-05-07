@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import React, { useState, useEffect, useReducer } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useNavigate, useParams } from 'react-router';
 import { TaskListItem, UserHeader, Pager } from '../../components';
 import './UserPage.sass';
 import userImg from '../../_images/UserImg.svg';
 import { store } from '../../store';
 
 
-export const UserPage = () => {
+export const UserPage = observer(() => {
 
     const navigate = useNavigate()
     // useEffect(() => {
@@ -15,9 +16,15 @@ export const UserPage = () => {
     //     }
     // })
 
+
+    const { id } = useParams();
+    useEffect(() => {store.data.users.id(id)}, [])
+    console.log(store.openedUser)
+
+
     return(
         <>
-            <UserHeader mode="user" />
+            <UserHeader mode="user" user={store.openedUser} />
             <main className="userPage">
                 <div className="userPage-left">
                     <img src={userImg} />
@@ -41,4 +48,4 @@ export const UserPage = () => {
         </>
 
     )
-}
+})

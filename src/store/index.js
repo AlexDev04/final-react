@@ -34,6 +34,14 @@ class Store {
         photoUrl: ''
     };
 
+    openedUser = {
+        id: '',
+        username: '',
+        login: '',
+        about: '',
+        photoUrl: ''
+    }
+
     users=[]
 
     authorized = false;
@@ -53,9 +61,20 @@ class Store {
             },
             all() {
                 api.users.all()
-                .then(response => {
-                    response.data.map(el => store.users.push(el))
-                })
+                    .then(response => {
+                        response.data.map(el => store.users.push(el))
+                    })
+            },
+            id(id) {
+                api.users.id(id)
+                    .then(response => {
+                        console.log(`get user by id ${id}`)
+                        store.openedUser.id = response.data.id
+                        store.openedUser.username = response.data.username
+                        store.openedUser.login = response.data.login
+                        store.openedUser.about = response.data.about
+                        store.openedUser.photoUrl = response.data.photoUrl
+                    })
             }
         }
     };

@@ -14,6 +14,9 @@ export const api = {
                 login: login,
                 password: password
             })
+        },
+        id(id) {
+            return axios.get(`users/${id}`)
         }
     }
 }
