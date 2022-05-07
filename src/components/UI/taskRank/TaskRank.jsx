@@ -6,23 +6,26 @@ import high from '../../../_images/high.svg';
 
 export const TaskRank = ({rank}) => {
 
-    let img;
+    let img, txt;
     switch (rank) {
         case 'low':
             img = low;
+            txt = 'Низкий';
             break;
-        case 'mid':
+        case 'medium':
             img = mid;
+            txt = 'Средний';
             break;
         case 'high':
             img = high;
+            txt = 'Высокий';
             break;
     }
 
     return(
         <div className={`rank-${rank}`}>
             <img src={img} />
-            <p>{rank}</p>
+            <p>{txt}</p>
         </div>
     )
 }

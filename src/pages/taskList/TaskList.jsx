@@ -10,11 +10,14 @@ import { useNavigate } from "react-router";
 export const TaskList = observer(() => {
 
     const navigate = useNavigate()
-    useEffect(action(() => {
+    useEffect(() => {
         if(!store.authorized) {
             navigate('/auth')
         }
-    }))
+        store.data.tasks.all()
+    }, [])
+
+    console.log(store.tasks)
 
     console.log(store.authorized)
 
@@ -47,14 +50,18 @@ export const TaskList = observer(() => {
                     <But type="primary" className="taskList-sorting-apply">Применить</But>
                 </section>
                 <section className="taskList-list">
+
+                    { store.tasks.map(el =>
                     <TaskListItem
-                        type="bug"
-                        taskName="Создать SPA на React"
-                        userName="Малыш Грут"
-                        status="test"
-                        rank="high"
+                        type={el.type}
+                        taskName={el.title}
+                        userName={el.userId}
+                        status={el.status}
+                        rank={el.rank}
                         more
-                    />
+                    />)
+                    }
+
                 </section>
                 <Pager className="taskList-pager" />
             </main>

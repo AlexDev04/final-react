@@ -86,6 +86,15 @@ class Store {
                         console.log(user)
                     })
             }
+        },
+        tasks: {
+            all() {
+                api.tasks.all()
+                    .then(response => {
+                        console.log(response);
+                        response.data.data.map(el => store.tasks.push(el))
+                    })
+            }
         }
     };
 }

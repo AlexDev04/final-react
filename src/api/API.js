@@ -28,5 +28,15 @@ export const api = {
                 password: password,
             })
         }
+    },
+
+    tasks: {
+        all() {
+            return axios.post('/tasks', {
+                filter: {},
+                page: 0,
+                limit: 0
+              })
+        }
     }
 }
