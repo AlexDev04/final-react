@@ -27,6 +27,9 @@ export const api = {
                 photoUrl: url,
                 password: password,
             })
+        },
+        userTasks(id) {
+
         }
     },
 
@@ -37,6 +40,49 @@ export const api = {
                 page: 0,
                 limit: 0
               })
+        },
+        id(id) {
+            return axios.get(`/tasks/${id}`)
+        },
+        status(id, status) {
+            return axios.patch(`/tasks/${id}/status/${status}`)
+        },
+        createOrEdit(id, userId, assignedId, title, description, type, dateOfCreation, dateOfUpdate, timeInMinutes, status, rank) {
+            return axios.put(`/tasks/createOrEdit`, {
+                id: id,
+                userId: userId,
+                assignedId: assignedId,
+                title: title,
+                description: description,
+                type: type,
+                dateOfCreation: dateOfCreation,
+                dateOfUpdate: dateOfUpdate,
+                timeInMinutes: timeInMinutes,
+                status: status,
+                rank: rank
+            })
+        }
+    },
+
+    comments: {
+        taskId(id) {
+            console.log(id)
+            return axios.get(`/comments/${id}`)
+        },
+        add(taskId, userId, text) {
+            return axios.put('/comments/createOrEdit', {
+            taskId: taskId,
+            userId: userId,
+            text: text
+            })
+        },
+        edit(id, taskId, userId, text) {
+            return axios.put('/comments/createOrEdit', {
+            id: id,
+            taskId: taskId,
+            userId: userId,
+            text: text
+            })
         }
     }
 }

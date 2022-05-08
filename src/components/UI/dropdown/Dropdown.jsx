@@ -1,22 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import './Dropdown.sass';
 import '../../../_styles/style.sass'
 import closedDropdown from '../../../_images/closedDropdown.svg';
 import openedDropdown from '../../../_images/openedDropdown.svg';
+import { values } from "mobx";
 
 
-export const Dropdown = ({children, name, dis, className, val}) => {
+export const Dropdown = ({children, name, dis, className, val, valEn, id, updateData}) => {
+
+    const [opened, setOpened] = useState(false);
+    const [selected, setSelected] = useState({ru: val , en: valEn, id: id});
 
     const ChildrenEl = () => 
         React.Children.map(children, child => 
             React.cloneElement(child, {
-                className: `${child.props.className} dropdown-content-el ${selected !== undefined? child.props.children === selected && 'dropdown-content-el-active': ''}`
+                className: `${child.props.className} dropdown-content-el ${selected !== undefined? child.props.children === selected.ru && 'dropdown-content-el-active': ''}`
 
             })
         );
-
-    const [opened, setOpened] = useState(false);
-    const [selected, setSelected] = useState(val);
 
     let img;
     switch (opened) {
@@ -31,11 +32,13 @@ export const Dropdown = ({children, name, dis, className, val}) => {
     const handleOpen = () => {
         if(!dis)setOpened(!opened)
     }
-    // console.log(opened)
 
     const handleChange = (evt) => {
-        if(!dis)setSelected(evt.target.innerHTML)
-        console.log(evt.target.innerHTML)
+        if(!dis)setSelected({ru: evt.target.innerHTML, en: evt.target.getAttribute('name'), id: evt.target.id})
+        console.log({ru: evt.target.innerHTML, en: evt.target.getAttribute('name'), id: evt.target.id})
+        console.log(evt.target.innerHTML, evt.target.id)
+        if(selected.id !== '') updateData(evt.target.innerHTML, evt.target.id)
+        else if(selected.id === '') updateData(evt.target.getAttribute('name'))
     }
     console.log(selected)
 
@@ -43,7 +46,7 @@ export const Dropdown = ({children, name, dis, className, val}) => {
         <div className={`dropdown-outer ${className}`}  >
             <div className={`${opened && 'dropdown'} ${dis && 'dropdown-dis'}`} onClick={handleOpen}>
                 <div className={`${!dis && 'dropdown-label'} ${opened && 'dropdown-label-active'} ${selected && 'dropdown-label-active'}`}>
-                    <p>{selected || name}</p>
+                    <p>{selected.ru || name}</p>
                     {!dis && <img src={img} />}
                 </div>
                 <div className={`dropdown-content ${!opened && 'hidden'}`} onClick={handleChange}>

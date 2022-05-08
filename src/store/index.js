@@ -43,6 +43,26 @@ class Store {
         photoUrl: ''
     }
 
+    openedTask = {
+        id: '',
+        userId: '',
+        user: '',
+        assignedId: '',
+        assigned: '',
+        title: '',
+        description: '',
+        type: '',
+        typeRu: '',
+        dateOfCreation: '2022-05-07T12:59:23.232Z',
+        dateOfUpdate: '2022-05-07T12:59:23.232Z',
+        timeInMinutes: 0,
+        status: '',
+        statusRu: '',
+        rank: '',
+        rankRu: '',
+        comments: []
+    }
+
     users = [];
 
     tasks = [];
@@ -65,6 +85,7 @@ class Store {
             all() {
                 api.users.all()
                     .then(response => {
+                        store.users = [];
                         response.data.map(el => store.users.push(el))
                     })
             },
@@ -91,9 +112,80 @@ class Store {
             all() {
                 api.tasks.all()
                     .then(response => {
+                        store.tasks = [];
                         console.log(response);
                         response.data.data.map(el => store.tasks.push(el))
                     })
+            },
+            id(id) {
+                api.tasks.id(id)
+                .then(response => {
+                    console.log(response.data);
+                    store.openedTask.id = response.data.id;
+                    store.openedTask.userId = response.data.userId;
+                    store.openedTask.assignedId = response.data.assignedId;
+                    store.openedTask.title = response.data.title;
+                    store.openedTask.description = response.data.description;
+                    store.openedTask.type = response.data.type;
+                    switch(response.data.type) {
+                        case 'bug':
+                            store.openedTask.typeRu = 'Баг';
+                            break;
+                        case 'task':
+                            store.openedTask.typeRu = 'Задача';
+                            break;
+                    }
+                    store.openedTask.dateOfCreation = response.data.dateOfCreation;
+                    store.openedTask.dateOfUpdate = response.data.dateOfUpdate;
+                    store.openedTask.timeInMinutes = response.data.timeInMinutes;
+                    store.openedTask.status = response.data.status;
+                    switch(response.data.status) {
+                        case 'opened':
+                            store.openedTask.statusRu = 'Открыто';
+                            break;
+                        case 'inProgress':
+                            store.openedTask.statusRu = 'В работе';
+                            break;
+                        case 'testing':
+                            store.openedTask.statusRu = 'Тестируется';
+                            break;
+                        case 'completed':
+                            store.openedTask.statusRu = 'Завершено';
+                            break;
+                    }
+                    store.openedTask.rank = response.data.rank;
+                    switch(response.data.rank) {
+                        case 'low':
+                            store.openedTask.rankRu = 'Низкий';
+                            break;
+                        case 'medium':
+                            store.openedTask.rankRu = 'Средний';
+                            break;
+                        case 'high':
+                            store.openedTask.rankRu = 'Высокий';
+                            break;
+                    }
+                    api.users.id(response.data.userId)
+                        .then(response => store.openedTask.user = response.data.username);
+                    api.users.id(response.data.assignedId)
+                        .then(response => store.openedTask.assigned = response.data.username);
+                    api.comments.taskId(response.data.id)
+                        .then(response => store.openedTask.comments = response.data)
+                })
+            },
+            changeStatus(id, status) {
+                api.tasks.status(id, status)
+                    .then(response => console.log(response))
+            },
+            edit(id, userId, assignedId, title, description, type, dateOfCreation, dateOfUpdate, timeInMinutes, status, rank) {
+                api.tasks.createOrEdit(id, userId, assignedId, title, description, type, dateOfCreation, dateOfUpdate, timeInMinutes, status, rank)
+                    .then(response => console.log(response))
+            }
+        },
+        comments: {
+            add(text) {
+                api.comments.add(store.openedTask.id, store.curUser.id, text)
+                    .then(response => console.log(response))
             }
         }
     };

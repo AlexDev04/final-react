@@ -53,11 +53,13 @@ export const TaskList = observer(() => {
 
                     { store.tasks.map(el =>
                     <TaskListItem
+                        key={el.id}
                         type={el.type}
                         taskName={el.title}
                         userName={el.userId}
                         status={el.status}
                         rank={el.rank}
+                        id={el.id}
                         more
                     />)
                     }

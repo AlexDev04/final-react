@@ -22,7 +22,10 @@ export const Modal = observer(({mode}) => {
     const updateUrl = (value) => {
         setUser({...user, photoUrl: value})
     }
-
+    
+    const updateAbout = (value) => {
+        setUser({...user, about: value})
+    }
     const handleEditUser = () => {
         console.log(user);
         store.data.users.edit(user)
@@ -77,7 +80,7 @@ export const Modal = observer(({mode}) => {
                             <p className="placeholder">URL фотографии</p>
                             <TextInput type="primary" updateData={updateUrl}></TextInput>
                             <p className="placeholder">О себе</p>
-                            <TextZone type="primary" />
+                            <TextZone type="primary" updateData={updateAbout} />
                         </div>
 
                         <hr />

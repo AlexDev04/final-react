@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import "./More.sass"
 
-export const More = ({className}) => {
+export const More = ({className, id}) => {
+
+    const navigate = useNavigate();
 
     const [open, setOpen] = useState(false)
 
@@ -14,6 +17,10 @@ export const More = ({className}) => {
         setOpen(false)
     }
 
+    const handleEdit = (id) => {
+        navigate(`/tasks/edit/${id}`)
+    }
+
     return (
         <div className={`${className} more`}>
             <div
@@ -23,7 +30,7 @@ export const More = ({className}) => {
             >
             </div>
             <div className="more-content">
-                <div>Редактировать</div>
+                <div onClick={handleEdit}>Редактировать</div>
                 <div className="more-content-delete">Удалить</div>
                 <div>Взять в работу</div>
                 <div>На тестирование</div>

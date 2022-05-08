@@ -1,34 +1,82 @@
 import React, { useState, useReducer, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Dropdown, TaskHeader, TextInput, TextZone, But, Modal } from "../../components"
 import "./TaskPage.sass"
-import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import { modal, store } from "../../store";
+import { api } from "../../api/API";
 
 
 export const TaskPage = observer(({mode}) => {
 
     console.log(mode);
 
+    const [commentText, setCommentText] = useState();
+
+    const [task, setTask] = useState(store.openedTask);
+
+    const { id } = useParams();
     const navigate = useNavigate();
+
     useEffect(() => {
+        store.data.tasks.id(id);
+        console.log(store.openedTask);
         if(!store.authorized) {
             navigate('/auth')
         }
-    })
+        store.data.users.all()
+        console.log(store.openedTask.assigned)
+    }, [store.openedTask])
 
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
-    const handleOpen = action(() => {
+    const handleOpen = () => {
         modal.open()
         forceUpdate()
         console.log(modal.opened)
-    })
+    }
+
+    const updateCommentText = (value) => {
+        setCommentText(value);
+        console.log(commentText)
+    }
+
+    const handleAddComment = () => {
+        store.data.comments.add(commentText)
+        forceUpdate()
+    }
+
+    const updateAssigned = (val, id) => {
+        console.log(val, id)
+        setTask({...task, assigned: val, assignedId: id })
+        console.log(task)
+    }
+
+    const updateRank = (val) => {
+        setTask({...task, rank: val})
+        console.log(task)
+    }
+
+    const updateType = (val) => {
+        setTask({...task, type: val})
+        console.log(task)
+    }
+
+    const updateTitle = (val) => {
+        setTask({...task, title: val})
+    }
+
+    const updateDescription = (val) => {
+        setTask({...task, description: val})
+    }
+
+    console.log(task)
 
     return(
         <>
-            <TaskHeader mode={mode} />
+            <TaskHeader mode={mode} primaryBut={() => store.data.tasks.edit(
+                task.id, task.userId, task.assignedId, task.title, task.description, task.type, task.dateOfCreation, task.dateOfUpdate, task.timeInMinutes, task.status, task.rank
+            )} />
             <main className="taskPage">
 
                 {/* Создание и редактирование задачи */}
@@ -37,28 +85,53 @@ export const TaskPage = observer(({mode}) => {
                 <>
                     <section className="taskPage-left">
                         <label>Исполнитель</label>
-                        <Dropdown name="Исполнитель">
-                            <div>Малыш Грут</div>
-                            <div>Евгений онегин</div>
+                        <Dropdown 
+                            name="Исполнитель" 
+                            val={store.openedTask.assigned} 
+                            valEn={store.openedTask.assigned}
+                            id={store.openedTask.assignedId}
+                            updateData={updateAssigned}
+                        >
+                            {store.users.map(user => <div key={user.id} name={user.username} id={user.id}>{user.username}</div>)}
                         </Dropdown>
                         <label>Тип запроса</label>
-                        <Dropdown name="Тип запроса">
-                            <div>Задача</div>
-                            <div>Баг</div>
+                        <Dropdown 
+                            name="Тип запроса" 
+                            val={store.openedTask.typeRu} 
+                            valEn={store.openedTask.type}
+                            id=''
+                            updateData={updateType}
+                        >
+                            <div name="task">Задача</div>
+                            <div name="bug">Баг</div>
                         </Dropdown>
                         <label>Приоритет</label>
-                        <Dropdown name="Приоритет">
-                            <div>Низкий</div>
-                            <div>Средний</div>
-                            <div>Высокий</div>
+                        <Dropdown 
+                            name="Приоритет" 
+                            val={store.openedTask.rankRu} 
+                            valEn={store.openedTask.rank}
+                            id=''
+                            updateData={updateRank}
+                        >
+                            <div name="low">Низкий</div>
+                            <div name="medium">Средний</div>
+                            <div name="high">Высокий</div>
                         </Dropdown>
                     </section>
                     <hr />
                     <section className="taskPage-center">
                         <label>Название</label>
-                        <TextInput type="primary" placeholder="Название" />
+                        <TextInput 
+                            type="primary" 
+                            placeholder="Название" 
+                            updateData={updateTitle}
+                        />
                         <label>Описание</label>
-                        <TextZone type="primary" placeholder="Описание" />
+                        <TextZone 
+                            type="primary" 
+                            placeholder="Описание" 
+                            updateData={updateDescription}
+                        />
                     </section>
                     <section className="taskPage-right">
                     </section>
@@ -71,34 +144,42 @@ export const TaskPage = observer(({mode}) => {
                 <>
                     <Modal />
                     <section className="taskPage-left">
-                        <p className="taskPage-placeholder">Исполнитель</p>
-                        <p>Евгений Онегин</p>
-                        <p className="taskPage-placeholder">Автор задачи</p>
-                        <p>Доктор Ватсон</p>
-                        <p className="taskPage-placeholder">Тип запроса</p>
-                        <p>Задача</p>
-                        <p className="taskPage-placeholder">Приоритет</p>
-                        <p>Низкий</p>
-                        <p className="taskPage-placeholder">Дата создания</p>
-                        <p>01.12.2021 12:12</p>
-                        <p className="taskPage-placeholder">Дата изменения</p>
-                        <p>01.12.2021 12:20</p>
-                        <p className="taskPage-placeholder">Затрачено времени</p>
-                        <p>0 часов 0 минут</p>
+                        <p className="placeholder">Исполнитель</p>
+                        <p>{store.openedTask.assigned}</p>
+                        <p className="placeholder">Автор задачи</p>
+                        <p>{store.openedTask.user}</p>
+                        <p className="placeholder">Тип запроса</p>
+                        <p>{store.openedTask.type}</p>
+                        <p className="placeholder">Приоритет</p>
+                        <p>{store.openedTask.rank}</p>
+                        <p className="placeholder">Дата создания</p>
+                        <p>{store.openedTask.dateOfCreation}</p>
+                        <p className="placeholder">Дата изменения</p>
+                        <p>{store.openedTask.dateOfUpdate}</p>
+                        <p className="placeholder">Затрачено времени</p>
+                        <p>{store.openedTask.timeInMinutes}</p>
                         <But type="primary"  onClick={handleOpen}>Сделать запись о работе</But>
                     </section>
                     <hr />
                     <section className="taskPage-center">
-                        <p className="taskPage-placeholder">Описание</p>
-                        <p>Какой-то текст задачи, например, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean imperdiet consectetur dolor, nec consectetur nisl mattis ut. Proin ac sapien at elit lacinia semper. Nullam vestibulum rutrum efficitur. Sed et egestas ante, id ullamcorper ante. Maecenas porta sem ultrices libero tempus, eu laoreet turpis bibendum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed laoreet est et nisi tristique, ut hendrerit tellus pulvinar. Proin eget elit a mauris convallis molestie nec vel nisi. Etiam accumsan porta velit et convallis. Maecenas euismod scelerisque lectus, non varius velit condimentum non. Vestibulum luctus risus et metus volutpat, at sodales massa gravida.</p>
+                        <p className="placeholder">Описание</p>
+                        <p>{store.openedTask.description}</p>
                     </section>
                     <hr />
                     <section className="taskPage-right">
-                        <p className="taskPage-placeholder">Комментарии(1)</p>
-                        <TextZone placeholder="Текст комментария" type="primary" />
-                        <But type="success">Добавить комментарий</But>
-                        <p className="taskPage-placeholder">Шерлок Холмс (27.03.22 17:42)</p>
-                        <p>Я так не думаю</p>
+                        <p className="placeholder">Комментарии({store.openedTask.comments.length})</p>
+                        <TextZone placeholder="Текст комментария" type="primary" updateData={updateCommentText} />
+                        <But type="success" onClick={handleAddComment}>Добавить комментарий</But>
+                        {store.openedTask.comments.map(el => 
+                            <div key={el.id}>
+                                <p className="placeholder">{
+                                    store.users.find(user => user.id === el.userId).username
+                                }</p>
+                                <p>{el.text}</p>
+                            </div>
+                        )}
+                        {/* <p className="placeholder">Шерлок Холмс (27.03.22 17:42)</p>
+                        <p>Я так не думаю</p> */}
                     </section>
                 </>
                 }
