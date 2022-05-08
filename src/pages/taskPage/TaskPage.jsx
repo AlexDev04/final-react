@@ -33,12 +33,10 @@ export const TaskPage = observer(({mode}) => {
     const handleOpen = () => {
         modal.open()
         forceUpdate()
-        console.log(modal.opened)
     }
 
     const updateCommentText = (value) => {
         setCommentText(value);
-        console.log(commentText)
     }
 
     const handleAddComment = () => {
@@ -49,17 +47,14 @@ export const TaskPage = observer(({mode}) => {
     const updateAssigned = (val, id) => {
         console.log(val, id)
         setTask({...task, assigned: val, assignedId: id })
-        console.log(task)
     }
 
     const updateRank = (val) => {
         setTask({...task, rank: val})
-        console.log(task)
     }
 
     const updateType = (val) => {
         setTask({...task, type: val})
-        console.log(task)
     }
 
     const updateTitle = (val) => {
@@ -74,9 +69,14 @@ export const TaskPage = observer(({mode}) => {
 
     return(
         <>
-            <TaskHeader mode={mode} primaryBut={() => store.data.tasks.edit(
+            <TaskHeader mode={mode} primaryBut={() => {
+                if(mode === 'edit') store.data.tasks.edit(
                 task.id, task.userId, task.assignedId, task.title, task.description, task.type, task.dateOfCreation, task.dateOfUpdate, task.timeInMinutes, task.status, task.rank
-            )} />
+                )
+                if(mode==='create') store.data.tasks.add(
+                    task.assignedId, task.title, task.description, task.rank, task.type,
+                )
+            }} />
             <main className="taskPage">
 
                 {/* Создание и редактирование задачи */}

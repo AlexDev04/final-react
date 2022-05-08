@@ -36,9 +36,10 @@ export const Dropdown = ({children, name, dis, className, val, valEn, id, update
     const handleChange = (evt) => {
         if(!dis)setSelected({ru: evt.target.innerHTML, en: evt.target.getAttribute('name'), id: evt.target.id})
         console.log({ru: evt.target.innerHTML, en: evt.target.getAttribute('name'), id: evt.target.id})
+        console.log(selected.id)
         console.log(evt.target.innerHTML, evt.target.id)
-        if(selected.id !== '') updateData(evt.target.innerHTML, evt.target.id)
-        else if(selected.id === '') updateData(evt.target.getAttribute('name'))
+        if(evt.target.id !== '') updateData(evt.target.innerHTML, evt.target.id)
+        else if(evt.target.id === '') updateData(evt.target.getAttribute('name'))
     }
     console.log(selected)
 

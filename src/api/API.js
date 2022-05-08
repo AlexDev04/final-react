@@ -47,7 +47,7 @@ export const api = {
         status(id, status) {
             return axios.patch(`/tasks/${id}/status/${status}`)
         },
-        createOrEdit(id, userId, assignedId, title, description, type, dateOfCreation, dateOfUpdate, timeInMinutes, status, rank) {
+        edit(id, userId, assignedId, title, description, type, dateOfCreation, dateOfUpdate, timeInMinutes, status, rank) {
             return axios.put(`/tasks/createOrEdit`, {
                 id: id,
                 userId: userId,
@@ -59,6 +59,18 @@ export const api = {
                 dateOfUpdate: dateOfUpdate,
                 timeInMinutes: timeInMinutes,
                 status: status,
+                rank: rank
+            })
+        },
+        create(userId, assignedId, title, description, rank, type) {
+            return axios.put(`/tasks/createOrEdit`, {
+                userId: userId,
+                assignedId: assignedId,
+                title: title,
+                description: description,
+                type: type,
+                timeInMinutes: 0,
+                status: "opened",
                 rank: rank
             })
         }

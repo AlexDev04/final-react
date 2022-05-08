@@ -178,8 +178,12 @@ class Store {
                     .then(response => console.log(response))
             },
             edit(id, userId, assignedId, title, description, type, dateOfCreation, dateOfUpdate, timeInMinutes, status, rank) {
-                api.tasks.createOrEdit(id, userId, assignedId, title, description, type, dateOfCreation, dateOfUpdate, timeInMinutes, status, rank)
+                api.tasks.edit(id, userId, assignedId, title, description, type, dateOfCreation, dateOfUpdate, timeInMinutes, status, rank)
                     .then(response => console.log(response))
+            },
+            add(assignedId, title, description, rank, type) {
+                api.tasks.create(store.curUser.id, assignedId, title, description, rank, type)
+                .then(response => console.log(response))
             }
         },
         comments: {
