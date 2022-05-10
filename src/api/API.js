@@ -29,7 +29,15 @@ export const api = {
             })
         },
         userTasks(id) {
-
+            return axios.post('/tasks', {
+                filter: {
+                    // assignedUsers: [
+                    //     id
+                    // ],
+                },
+                page: 0,
+                limit: 0
+            })
         }
     },
 
@@ -72,6 +80,16 @@ export const api = {
                 timeInMinutes: 0,
                 status: "opened",
                 rank: rank
+            })
+        },
+        delete(id) {
+            return axios.delete(`/tasks/${id}`)
+        },
+        addWorktime(taskId, time, comment, userId) {
+            return axios.patch(`/tasks/${taskId}/worktime`, {
+                timeInMinutes: time,
+                comment: comment,
+                currentUser: userId
             })
         }
     },

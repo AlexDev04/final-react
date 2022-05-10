@@ -40,7 +40,8 @@ class Store {
         username: '',
         login: '',
         about: '',
-        photoUrl: ''
+        photoUrl: '',
+        tasks: []
     }
 
     openedTask = {
@@ -98,6 +99,12 @@ class Store {
                         store.openedUser.login = response.data.login
                         store.openedUser.about = response.data.about
                         store.openedUser.photoUrl = response.data.photoUrl
+                        api.users.userTasks(id)
+                            .then(response => {
+                                console.log(response)
+                                store.openedUser.tasks = [];
+                                response.data.data.map(el => store.tasks.push(el))
+                            })
                     })
             },
             edit(user) {
@@ -183,7 +190,15 @@ class Store {
             },
             add(assignedId, title, description, rank, type) {
                 api.tasks.create(store.curUser.id, assignedId, title, description, rank, type)
-                .then(response => console.log(response))
+                    .then(response => console.log(response))
+            },
+            delete(id) {
+                api.tasks.delete(id)
+                    .then(response => console.log(response))
+            },
+            addWorktimme(time, comment) {
+                api.tasks.addWorktime(store.openedTask.id, time, comment, store.curUser.id)
+                    .then(response => console.log(response))
             }
         },
         comments: {

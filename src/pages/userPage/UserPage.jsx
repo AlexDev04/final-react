@@ -3,23 +3,26 @@ import { observer } from 'mobx-react-lite';
 import { useNavigate, useParams } from 'react-router';
 import { TaskListItem, UserHeader, Pager, Modal } from '../../components';
 import './UserPage.sass';
-import userImg from '../../_images/UserImg.svg';
 import { store } from '../../store';
 
 
 export const UserPage = observer(() => {
 
     const navigate = useNavigate()
-    // useEffect(() => {
-    //     if(!store.authorized) {
-    //         navigate('/auth')
-    //     }
-    // })
-
+    useEffect(() => {
+        if(!store.authorized) {
+            navigate('/auth')
+        }
+    })
 
     const { id } = useParams();
-    useEffect(() => {store.data.users.id(id)}, [])
+    useEffect(() => {
+        store.data.users.id(id)
+    }, [])
     console.log(store.openedUser)
+
+    let userImg = store.openedUser.photoUrl
+    if(userImg === null) userImg = 'https://cdn-icons-png.flaticon.com/512/149/149995.png'
 
 
     return(
@@ -28,7 +31,9 @@ export const UserPage = observer(() => {
             <UserHeader mode="user" user={store.openedUser} />
             <main className="userPage">
                 <div className="userPage-left">
-                    <img src={userImg} />
+                    <div className="userPage-left-img">
+                        <img src={userImg} />
+                    </div>
                     <h3 className="placeholder">О себе</h3>
                     <p>
                         {store.openedUser.about}
@@ -38,7 +43,7 @@ export const UserPage = observer(() => {
                 <div className="userPage-right">
                     <h3 className="placeholder">Задачи</h3>
                     <section className="userPage-right-tasks">
-                        {/* <TaskListItem type="bug" taskName="Задача" status="done" rank="high" /> */}
+                        {store.openedUser.tasks.map(el => <TaskListItem type={el.type} taskName={el.name} status={el.status} rank={el.rank} />)}
                     </section>
                     <Pager />
                 </div>

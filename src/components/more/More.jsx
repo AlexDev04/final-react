@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import "./More.sass"
+import { store } from "../../store";
 
-export const More = ({className, id}) => {
+export const More = ({className, id, mode}) => {
+    
+    console.log(mode)
 
     const navigate = useNavigate();
 
@@ -17,8 +20,28 @@ export const More = ({className, id}) => {
         setOpen(false)
     }
 
-    const handleEdit = (id) => {
+    const handleEdit = () => {
         navigate(`/tasks/edit/${id}`)
+    }
+
+    const handleInWork = () => {
+        store.data.tasks.changeStatus(id, 'inProgress')
+    }
+
+    const handleTest = () => {
+        store.data.tasks.changeStatus(id, 'testing')
+    }
+
+    const handleReOpen = () => {
+        store.data.tasks.changeStatus(id, 'opened')
+    }
+
+    const handleComplete = () => {
+        store.data.tasks.changeStatus(id, 'complete')
+    }
+
+    const handleDelete = () => {
+        store.data.tasks.delete(id)
     }
 
     return (
@@ -31,11 +54,32 @@ export const More = ({className, id}) => {
             </div>
             <div className="more-content">
                 <div onClick={handleEdit}>Редактировать</div>
-                <div className="more-content-delete">Удалить</div>
-                <div>Взять в работу</div>
-                <div>На тестирование</div>
-                <div>Переоткрыть</div>
-                <div>Сделано</div>
+                <div className="more-content-delete" onClick={handleDelete}>Удалить</div>
+                {mode === 'opened' &&
+                <>
+                    <div onClick={handleInWork}>Взять в работу</div>
+                    <div onClick={handleComplete}>Сделано</div>
+                </>
+                }
+                {mode === 'inProgress' && 
+                <>
+                    <div onClick={handleTest}>На тестирование</div>
+                    <div onClick={handleReOpen}>Переоткрыть</div>
+                    <div onClick={handleComplete}>Сделано</div>
+                </>
+                }
+                {mode === 'testing' && 
+                <>
+                    <div onClick={handleReOpen}>Переоткрыть</div>
+                    <div onClick={handleComplete}>Сделано</div>
+                </>
+                }
+                {mode === 'complete' && 
+                    <div onCLick={handleReOpen}>Переоткрыть</div>
+                }
+
+
+
             </div>
         </div>
 

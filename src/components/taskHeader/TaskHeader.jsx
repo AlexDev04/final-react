@@ -85,7 +85,7 @@ export const TaskHeader = ({mode, primaryBut}) => {
                             <TaskStatus status={task.status} />
                         </div>
                         <div>
-                            <But type="default" onClick={() => handleChangeStatus}>{changeStatusText}</But>
+                            <But type="default" onClick={handleChangeStatus}>{changeStatusText}</But>
                             <But type="primary" onClick={() => navigate(`/tasks/edit/${task.id}`)}>Редактировать</But>
                             <But type="error">Удалить</But>
                         </div>

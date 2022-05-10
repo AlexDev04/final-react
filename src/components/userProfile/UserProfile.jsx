@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useState, useEffect } from 'react';
 import { store } from '../../store';
-import userImg from '../../_images/UserImg.svg';
 import './UserProfile.sass';
 import { useNavigate } from 'react-router';
 
@@ -17,10 +16,16 @@ export const UserProfile = observer(() => {
         navigate(`/users/${user.id}`)
     }
 
+    console.log(store.curUser.photoUrl)
+    const userImg = store.curUser.photoUrl
+
     return(
         <div className="userProfile" onClick={handleUser}>
             <p>{user.username}</p>
-            <img src={user.img} />
+
+            <div>
+                <img src={user.img} />
+            </div>
         </div>
     )
 })

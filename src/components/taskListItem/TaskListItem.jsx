@@ -32,7 +32,7 @@ export const TaskListItem = ({type, taskName, userName, status, rank, id, more})
                     <TaskRank rank={rank} />
                 </div>
                 {more &&
-                    <More className="taskListItem-burger" id={id} />
+                    <More className="taskListItem-burger" mode={status} id={id} />
                 }
             </article>
     )

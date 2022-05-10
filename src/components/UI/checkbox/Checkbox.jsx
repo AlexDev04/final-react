@@ -2,30 +2,29 @@ import React, { useState } from 'react';
 import './Checkbox.sass'
 
 
-export const Checkbox = ({className, text, ticked, handleChange}) => {
+export const Checkbox = ({className, text, valEn}) => {
 
     const [clicked, setClicked] = useState(false)
 
     const handleClick = () => {
-        setClicked(!clicked)
+        setClicked(!clicked);
+        console.log(clicked)
     }
 
     return(
         <div 
             className={`checkbox ${className}`}
             text={text}
-            name={text}
-            onClick={() => {
-                handleChange(text);
-                setClicked(!clicked)
-            }}
+            name={valEn}
+            onClick={handleClick}
         >
             <input
                 type="checkbox" 
-                name={text} 
+                name={valEn} 
                 checked={clicked}
+                onChange={handleClick}
             />
-            <label htmlFor={text}>{text}</label>
+            <label htmlFor={text} name={valEn}>{text}</label>
         </div>
 
     )
