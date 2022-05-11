@@ -108,11 +108,11 @@ export const Modal = observer(({mode}) => {
                         <hr />
                         <div className="modal-window-content">
                             <p className="placeholder">Имя пользователя</p>
-                            <TextInput type="primary" updateData={updateName}></TextInput>
+                            <TextInput type="primary" updateData={updateName}>{user && user.username}</TextInput>
                             <p className="placeholder">URL фотографии</p>
-                            <TextInput type="primary" updateData={updateUrl}></TextInput>
+                            <TextInput type="primary" updateData={updateUrl}>{user && user.photoUrl}</TextInput>
                             <p className="placeholder">О себе</p>
-                            <TextZone type="primary" updateData={updateAbout} />
+                            <TextZone type="primary" updateData={updateAbout}>{user && user.about}</TextZone>
                         </div>
 
                         <hr />

@@ -5,7 +5,11 @@ import './TaskHeader.sass';
 import { store } from "../../store";
 
 
-export const TaskHeader = ({mode, primaryBut}) => {
+export const TaskHeader = ({mode, primaryBut, id}) => {
+
+    console.log(id)
+    
+    const navigate = useNavigate();
 
     const [task, setTask] = useState({});
 
@@ -19,28 +23,38 @@ export const TaskHeader = ({mode, primaryBut}) => {
         console.log(`status is ${task.status}`);
         switch(task.status) {
             case 'opened':
-                console.log(changeStatusText)
-                changeStatusText = 'Взять в работу';
                 store.data.tasks.changeStatus(task.id, 'inProgress');
+                store.data.tasks.id(id);
                 break;
             case 'inProgress':
-                changeStatusText = 'Отправить на тестирование';
-                console.log(changeStatusText)
                 store.data.tasks.changeStatus(task.id, 'testing');
+                store.data.tasks.id(id);
                 break;
             case 'testing':
-                console.log(changeStatusText)
-                changeStatusText = 'Завершить';
-                store.data.tasks.changeStatus(task.id, 'completed');
+                store.data.tasks.changeStatus(task.id, 'complete');
+                store.data.tasks.id(id);
                 break;
-            default: 
-                alert('hi');
+            case 'complete':
+                store.data.tasks.changeStatus(task.id, 'opened');
+                store.data.tasks.id(id);
                 break;
         }
-
     }
 
-    const navigate = useNavigate();
+    switch(task.status) {
+        case 'opened':
+            changeStatusText = 'Взять в работу';
+            break;
+        case 'inProgress':
+            changeStatusText = 'Отправить на тестирование';
+            break;
+        case 'testing':
+            changeStatusText = 'Завершить';
+            break;
+        case 'complete':
+            changeStatusText = 'Переоткрыть';
+            break;
+    }
 
         return(
             <section className="taskHeader">

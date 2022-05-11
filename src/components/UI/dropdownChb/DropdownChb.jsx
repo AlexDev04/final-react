@@ -11,13 +11,7 @@ export const DropdownChb = ({children, dis, placeholder, name, className, update
     const [opened, setOpened] = useState(false);
     const [selected, setSelected] = useState([]);
 
-    const ChildrenEl = () => 
-    React.Children.map(children, child => 
-        React.cloneElement(child, {
-            className: 'dropdownChb-content-el',
-            text: child.props.text,
-        })
-    );
+    console.log(children)
 
     let img;
     switch (opened) {
@@ -59,7 +53,7 @@ export const DropdownChb = ({children, dis, placeholder, name, className, update
                     {!dis && <img src={img} />}
                 </div>
                 <div className={`dropdownChb-content ${!opened && 'hidden'}`} onClick={evt => handleChange(evt.target.getAttribute('name'))}>
-                    <ChildrenEl />
+                    {children.map(el => <Checkbox className="dropdownChb-content-el" text={el.props.text} />)}
                 </div>
             </div>
         </div>

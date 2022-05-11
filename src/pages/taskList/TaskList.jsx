@@ -52,8 +52,10 @@ export const TaskList = observer(() => {
                     <TextInput
                         placeholder="Название задачи"
                         type="primary"
-                        className="taskList-sorting-name" />
+                        className="taskList-sorting-name"
+                    />
                     <DropdownChb name="Пользователь" className="taskList-sorting-username">
+                        <Checkbox text="Малыш Грут" valEn="Малыш Грут" />
                         <Checkbox text="Малыш Грут" valEn="Малыш Грут" />
                     </DropdownChb>
                     <DropdownChb name="Статус" className="taskList-sorting-status">

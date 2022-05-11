@@ -78,14 +78,18 @@ export const TaskPage = observer(({mode}) => {
 
     return(
         <>
-            <TaskHeader mode={mode} primaryBut={() => {
+            <TaskHeader 
+                mode={mode}
+                primaryBut={() => {
                 if(mode === 'edit') store.data.tasks.edit(
                 task.id, task.userId, task.assignedId, task.title, task.description, task.type, task.dateOfCreation, task.dateOfUpdate, task.timeInMinutes, task.status, task.rank
                 )
                 if(mode==='create') store.data.tasks.add(
                     task.assignedId, task.title, task.description, task.rank, task.type,
                 )
-            }} />
+                }}
+                id={task.id}
+                />
             <main className="taskPage">
 
                 {/* Создание и редактирование задачи */}

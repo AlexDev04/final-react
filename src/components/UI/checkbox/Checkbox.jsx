@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import './Checkbox.sass'
 
 
@@ -7,6 +7,7 @@ export const Checkbox = ({className, text, valEn}) => {
     const [clicked, setClicked] = useState(false)
 
     const handleClick = () => {
+        console.log(clicked);
         setClicked(!clicked);
         console.log(clicked)
     }
@@ -22,7 +23,6 @@ export const Checkbox = ({className, text, valEn}) => {
                 type="checkbox" 
                 name={valEn} 
                 checked={clicked}
-                onChange={handleClick}
             />
             <label htmlFor={text} name={valEn}>{text}</label>
         </div>
