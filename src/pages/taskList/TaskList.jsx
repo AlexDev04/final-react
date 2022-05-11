@@ -9,6 +9,18 @@ import { useNavigate } from "react-router";
 
 export const TaskList = observer(() => {
 
+    const [tasks, setTasks] = useState([]);
+
+    useEffect(() => {
+        store.data.tasks.pagination(0, 10);
+        console.log(store.tasksPag.data)
+        setTasks(store.tasksPag.data)
+    }, [])
+
+    useEffect(() => {
+        setTasks(store.tasksPag.data)
+    }, [store.tasksPag.data])
+
     const [filter, setFilter] = useState({})
 
     const navigate = useNavigate()
@@ -19,7 +31,7 @@ export const TaskList = observer(() => {
         store.data.tasks.all()
     }, [])
 
-    console.log(store.tasks)
+    console.log(store.tasks.data)
 
     console.log(store.authorized)
 
@@ -58,7 +70,7 @@ export const TaskList = observer(() => {
                 </section>
                 <section className="taskList-list">
 
-                    { store.tasks.map(el =>
+                    {tasks.map(el =>
                     <TaskListItem
                         key={el.id}
                         type={el.type}

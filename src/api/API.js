@@ -42,11 +42,11 @@ export const api = {
     },
 
     tasks: {
-        all() {
+        all(page, limit) {
             return axios.post('/tasks', {
                 filter: {},
-                page: 0,
-                limit: 0
+                page: page,
+                limit: limit
               })
         },
         id(id) {

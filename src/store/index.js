@@ -66,7 +66,11 @@ class Store {
 
     users = [];
 
+    usersPag = [];
+
     tasks = [];
+
+    tasksPag = [];
 
     authorized = false;
 
@@ -117,11 +121,17 @@ class Store {
         },
         tasks: {
             all() {
-                api.tasks.all()
+                api.tasks.all(0, 0)
                     .then(response => {
-                        store.tasks = [];
+                        store.tasks = response.data
                         console.log(response);
-                        response.data.data.map(el => store.tasks.push(el))
+                    })
+            },
+            pagination(page, limit) {
+                api.tasks.all(page, limit)
+                    .then(response => {
+                        store.tasksPag = response.data
+                        console.log(response);
                     })
             },
             id(id) {

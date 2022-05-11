@@ -29,8 +29,8 @@ export const Modal = observer(({mode}) => {
     const handleEditUser = () => {
         console.log(user);
         store.data.users.edit(user)
-        // modal.close()
-        // forceUpdate();
+        modal.close()
+        forceUpdate();
     }
 
     const handleClose = action(() => {
@@ -66,10 +66,10 @@ export const Modal = observer(({mode}) => {
     }
 
     const handleAdd = () => {
-        console.log(time.minutes, time.hours, time.days)
         console.log(time.minutes*1 + time.hours*1 * 60 + time.days*1 * 60 * 12)
-        const total = time.minutes + time.hours * 60 + time.days * 60 * 12
+        const total = time.minutes*1 + time.hours*1 * 60 + time.days*1 * 60 * 12
         store.data.tasks.addWorktimme(total, time.comment)
+        modal.close()
     }
 
     return(
