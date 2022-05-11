@@ -94,7 +94,7 @@ class Store {
                         response.data.map(el => store.users.push(el))
                     })
             },
-            id(id) {
+            id(id, page, limit) {
                 api.users.id(id)
                     .then(response => {
                         console.log(`get user by id ${id}`)
@@ -103,11 +103,10 @@ class Store {
                         store.openedUser.login = response.data.login
                         store.openedUser.about = response.data.about
                         store.openedUser.photoUrl = response.data.photoUrl
-                        api.users.userTasks(id)
+                        api.users.userTasks(id, page, limit)
                             .then(response => {
                                 console.log(response)
-                                store.openedUser.tasks = [];
-                                response.data.data.map(el => store.tasks.push(el))
+                                store.openedUser.tasks = response.data;
                             })
                     })
             },
@@ -214,6 +213,10 @@ class Store {
         comments: {
             add(text) {
                 api.comments.add(store.openedTask.id, store.curUser.id, text)
+                    .then(response => console.log(response))
+            },
+            delete(id) {
+                api.comments.delete(id)
                     .then(response => console.log(response))
             }
         }

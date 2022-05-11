@@ -28,15 +28,15 @@ export const api = {
                 password: password,
             })
         },
-        userTasks(id) {
+        userTasks(id, page, limit) {
             return axios.post('/tasks', {
                 filter: {
-                    // assignedUsers: [
-                    //     id
-                    // ],
+                    assignedUsers: [
+                        id
+                    ]
                 },
-                page: 0,
-                limit: 0
+                page: page,
+                limit: limit
             })
         }
     },
@@ -113,6 +113,9 @@ export const api = {
             userId: userId,
             text: text
             })
+        },
+        delete(id) {
+            return axios.delete(`/comments/${id}`)
         }
     }
 }

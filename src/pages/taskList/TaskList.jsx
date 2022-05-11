@@ -70,7 +70,7 @@ export const TaskList = observer(() => {
                 </section>
                 <section className="taskList-list">
 
-                    {tasks.map(el =>
+                    {tasks && tasks.map(el =>
                     <TaskListItem
                         key={el.id}
                         type={el.type}
@@ -84,7 +84,7 @@ export const TaskList = observer(() => {
                     }
 
                 </section>
-                <Pager className="taskList-pager" />
+                <Pager className="taskList-pager" mode="taskList" />
             </main>
         </>
     )

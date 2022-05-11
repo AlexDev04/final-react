@@ -4,10 +4,11 @@ import { Dropdown, TaskHeader, TextInput, TextZone, But, Modal } from "../../com
 import "./TaskPage.sass"
 import { observer } from "mobx-react-lite";
 import { modal, store } from "../../store";
-import { api } from "../../api/API";
 
 
 export const TaskPage = observer(({mode}) => {
+
+    // if(mode === 'create') store.openedTask = {}
 
     console.log(mode);
 
@@ -28,6 +29,8 @@ export const TaskPage = observer(({mode}) => {
         console.log(store.openedTask.assigned)
     }, [store.openedTask])
 
+    useEffect(() => store.data.tasks.id(id), [])
+
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
     const handleOpen = () => {
@@ -41,7 +44,8 @@ export const TaskPage = observer(({mode}) => {
 
     const handleAddComment = () => {
         store.data.comments.add(commentText)
-        forceUpdate()
+        store.data.tasks.id(id)
+        setCommentText('')
     }
 
     const updateAssigned = (val, id) => {
@@ -63,6 +67,11 @@ export const TaskPage = observer(({mode}) => {
 
     const updateDescription = (val) => {
         setTask({...task, description: val})
+    }
+
+    const deleteCom = (comId) => {
+        store.data.comments.delete(comId)
+        store.data.tasks.id(id)
     }
 
     console.log(task)
@@ -123,15 +132,17 @@ export const TaskPage = observer(({mode}) => {
                         <label>Название</label>
                         <TextInput 
                             type="primary" 
-                            placeholder="Название" 
                             updateData={updateTitle}
-                        />
+                        >
+                            {store.openedTask.title}
+                        </TextInput>
                         <label>Описание</label>
                         <TextZone 
                             type="primary" 
-                            placeholder="Описание" 
                             updateData={updateDescription}
-                        />
+                        >
+                            {store.openedTask.description}
+                        </TextZone>
                     </section>
                     <section className="taskPage-right">
                     </section>
@@ -168,13 +179,19 @@ export const TaskPage = observer(({mode}) => {
                     <hr />
                     <section className="taskPage-right">
                         <p className="placeholder">Комментарии({store.openedTask.comments.length})</p>
-                        <TextZone placeholder="Текст комментария" type="primary" updateData={updateCommentText} />
+                        <TextZone placeholder="Текст комментария" type="primary" updateData={updateCommentText}>{commentText}</TextZone>
                         <But type="success" onClick={handleAddComment}>Добавить комментарий</But>
                         {store.openedTask.comments.map(el => 
-                            <div key={el.id}>
-                                <p className="placeholder">{
-                                    store.users.find(user => user.id === el.userId).username
-                                }</p>
+                            <div key={el.id} className="comment">
+                                <div className="comment-header">
+                                    <p className="placeholder">{
+                                        store.users.find(user => user.id === el.userId).username
+                                    }</p>
+                                    {el.userId === store.curUser.id &&
+                                        <p className="comment-header-del" onClick={() => deleteCom(el.id)}>Удалить</p>
+                                    }
+                                </div>
+
                                 <p>{el.text}</p>
                             </div>
                         )}

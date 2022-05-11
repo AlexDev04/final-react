@@ -75,7 +75,7 @@ export const More = ({className, id, mode}) => {
                 </>
                 }
                 {mode === 'complete' && 
-                    <div onCLick={handleReOpen}>Переоткрыть</div>
+                    <div onClick={handleReOpen}>Переоткрыть</div>
                 }
 
 

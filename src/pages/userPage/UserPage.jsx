@@ -8,18 +8,25 @@ import { store } from '../../store';
 
 export const UserPage = observer(() => {
 
+    const [tasks, setTasks] = useState([]);
+
     const navigate = useNavigate()
     useEffect(() => {
         if(!store.authorized) {
             navigate('/auth')
         }
-    })
+    }, []);
 
     const { id } = useParams();
     useEffect(() => {
-        store.data.users.id(id)
+        store.data.users.id(id, 0, 10)
     }, [])
-    console.log(store.openedUser)
+
+    useEffect(() => {
+        console.log(store.openedUser.tasks)
+        setTasks(store.openedUser.tasks.data)
+        console.log(tasks)
+    }, [store.openedUser.tasks])
 
     let userImg = store.openedUser.photoUrl
     if(userImg === null) userImg = 'https://cdn-icons-png.flaticon.com/512/149/149995.png'
@@ -43,9 +50,9 @@ export const UserPage = observer(() => {
                 <div className="userPage-right">
                     <h3 className="placeholder">Задачи</h3>
                     <section className="userPage-right-tasks">
-                        {store.openedUser.tasks.map(el => <TaskListItem type={el.type} taskName={el.name} status={el.status} rank={el.rank} />)}
+                        {tasks && tasks.map(el => <TaskListItem type={el.type} taskName={el.name} status={el.status} rank={el.rank} />)}
                     </section>
-                    <Pager />
+                    <Pager mode="userPage" id={id} />
                 </div>
             </main>
         </>

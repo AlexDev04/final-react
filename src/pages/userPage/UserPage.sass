@@ -38,6 +38,21 @@
         &-tasks
             width: 100%
             @include board()
+
+            .taskListItem
+                justify-content: space-between
             
-            .taskListItem-name
-                justify-content: flex-start
+                &-type
+                    width: 10%
+
+                &-name
+                    justify-content: flex-start
+                    width: 25%
+
+                &-status
+                    width: 15%
+
+                &-rank
+                    width: 15%
+
+                

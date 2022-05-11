@@ -30,4 +30,22 @@
             
         button
             margin: 5px
-            
+    
+.comment
+    display: flex
+    flex-flow: column nowrap
+
+    &:hover &-header-del
+        display: inline
+
+    &-header
+        display: flex
+        justify-content: space-between
+
+        &-del
+            display: none
+            color: $error
+
+            &:hover
+                text-decoration: underline
+                cursor: pointer

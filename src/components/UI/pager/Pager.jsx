@@ -2,46 +2,80 @@ import React, { useEffect, useState } from "react";
 import { But } from "../";
 import './Pager.sass';
 import { store } from "../../../store";
-import { toBeInTheDocument } from "@testing-library/jest-dom/dist/matchers";
 
 
-export const Pager = ({className}) => {
+export const Pager = ({className, mode, id}) => {
 
-    console.log(store.tasksPag)
-
-    const [info, setInfo] = useState({});
+    const [infoTL, setInfoTL] = useState({});
+    const [infoUP, setInfoUP] = useState({});
 
     useEffect(() => {
-        setInfo({page: store.tasksPag.page, maxPage: Math.ceil(info.total/10 - 1), total: store.tasksPag.total});
-        console.log(info)
-    }, [store.tasksPag])
+        setInfoTL({page: store.tasksPag.page, maxPage: Math.ceil(store.tasksPag.total / 10 - 1), total: store.tasksPag.total});
+        console.log(infoTL)
+    }, [store.tasksPag]);
+
+    useEffect(() => {
+        console.log(store.openedUser.tasks)
+        setInfoUP({
+            page: store.openedUser.tasks.page,
+            maxPage: Math.ceil(store.openedUser.tasks.total / 10 - 1),
+            total: store.openedUser.tasks.total
+        })
+        console.log(infoUP)
+    }, [store.openedUser])
 
     const back = () => {
-        store.data.tasks.pagination(info.page - 1, 10)
+        mode == 'taskList' && store.data.tasks.pagination(infoTL.page - 1, 10);
+        mode === 'userPage' && store.data.users.id(id, infoUP.page - 1, 10)
     }
 
     const forward = () => {
-        store.data.tasks.pagination(info.page + 1, 10)
+        mode == 'taskList' && store.data.tasks.pagination(infoTL.page + 1, 10);
+        mode === 'userPage' && store.data.users.id(id, infoUP.page + 1, 10)
     }
 
 
     return(
         <section className={`${className} pager`}>
+
+            {mode === 'taskList' &&
+            <>
+                <div className="pager-left">
+                    <But type="default" onClick={back} dis={infoTL.page == 0}>Назад</But>
+                    {/* <But></But> */}
+                    <But type="default" onClick={forward} dis={infoTL.page == infoTL.maxPage}>Вперед</But>
+                </div>
+                <div className="placeholder">
+                    Показано 
+                    {infoTL.page !== infoTL.maxPage &&
+                    ' ' + infoTL.page + '1' + '-' + (infoTL.page + 1) + '0' + ' '
+                    }
+                    {infoTL.page === infoTL.maxPage &&
+                    ' ' + infoTL.page + '1' + '-' + infoTL.total + ' '
+                    }
+                    из {infoTL.total}
+                </div>
+            </>
+            }
+            {mode === 'userPage' && 
+            <>
             <div className="pager-left">
-                <But type="default" onClick={back} dis={info.page == 0}>Назад</But>
+                <But type="default" onClick={back} dis={infoTL.page == 0}>Назад</But>
                 {/* <But></But> */}
-                <But type="default" onClick={forward} dis={info.page == info.maxPage}>Вперед</But>
+                <But type="default" onClick={forward} dis={infoTL.page == infoTL.maxPage}>Вперед</But>
             </div>
             <div className="placeholder">
                 Показано 
-                {info.page !== info.maxPage &&
-                ' ' + info.page + '1' + '-' + (info.page + 1) + '0' + ' '
+                {infoUP.page !== infoUP.maxPage &&
+                ' ' + infoUP.page + '1' + '-' + (infoUP.page + 1) + '0' + ' '
                 }
-                {info.page === info.maxPage &&
-                ' ' + info.page + '1' + '-' + info.total + ' '
+                {infoUP.page === infoUP.maxPage &&
+                ' ' + infoUP.page + '1' + '-' + infoUP.total + ' '
                 }
-                из {info.total}
+                из {infoUP.total}
             </div>
+        </>
+            }
         </section>
     )
 }
