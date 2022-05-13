@@ -9,6 +9,14 @@ export const api = {
         all() {
             return axios.get('users/all')
         },
+        pagination(page, limit) {
+            return axios.post('/users', {
+                filter: {
+                },
+                page: page,
+                limit: limit
+              })
+        },
         login(login, password) {
             return axios.post('users/login', {
                 login: login,

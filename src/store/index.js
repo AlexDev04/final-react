@@ -94,6 +94,12 @@ class Store {
                         response.data.map(el => store.users.push(el))
                     })
             },
+            pagination(page, limit) {
+                api.users.pagination(page, limit)
+                    .then(response => {
+                        store.usersPag = response.data
+                    })
+            },
             id(id, page, limit) {
                 api.users.id(id)
                     .then(response => {

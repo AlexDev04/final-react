@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-import { action } from "mobx";
 import React, { useEffect, useState } from "react";
 import { But, DropdownChb, Checkbox, TaskHeader, TaskListItem, TextInput, Pager } from "../../components";
 import "./TaskList.sass";
@@ -10,6 +9,12 @@ import { useNavigate } from "react-router";
 export const TaskList = observer(() => {
 
     const [tasks, setTasks] = useState([]);
+    const [filter, setFilter] = useState({type: [], title: '', user: [], status: [], rank: []})
+
+    const updateType = (val) => {
+        setFilter({...filter, type: val})
+        console.log(filter)
+    }
 
     useEffect(() => {
         store.data.tasks.pagination(0, 10);
@@ -21,7 +26,6 @@ export const TaskList = observer(() => {
         setTasks(store.tasksPag.data)
     }, [store.tasksPag.data])
 
-    const [filter, setFilter] = useState({})
 
     const navigate = useNavigate()
     useEffect(() => {
@@ -34,11 +38,6 @@ export const TaskList = observer(() => {
     console.log(store.tasks.data)
 
     console.log(store.authorized)
-
-    const updateType = (val) => {
-        setFilter({...filter, type: val})
-        console.log(filter)
-    }
 
     return(
         <>

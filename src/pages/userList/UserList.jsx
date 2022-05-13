@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-import { action } from "mobx";
 import React, { useEffect, useState } from "react";
 import { UserHeader, Pager } from "../../components";
 import { store } from "../../store";
@@ -8,6 +7,18 @@ import './UserList.sass';
 
 
 export const UserList = observer(() => {
+
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        store.data.users.pagination(0, 10);
+        console.log(store.usersPag.data)
+        setUsers(store.usersPag.data)
+    }, [])
+
+    useEffect(() => {
+        setUsers(store.usersPag.data)
+    }, [store.usersPag.data])
 
     const navigate = useNavigate()
     useEffect(() => {
@@ -26,9 +37,9 @@ export const UserList = observer(() => {
             <UserHeader mode="userList" />
             <main className="userList">
             <section className="userList-list">
-                {store.users.map(el => <article key={el.id} onClick={() => handleNav(el.id)}>{el.username}</article>)}
+                {users && users.map(el => <article key={el.id} onClick={() => handleNav(el.id)}>{el.username}</article>)}
             </section>
-                <Pager className="userList-pager" />
+                <Pager className="userList-pager" mode="userList" />
             </main>
         </>
     )
