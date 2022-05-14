@@ -11,8 +11,6 @@ export const DropdownChb = ({children, dis, placeholder, name, className, update
     const [opened, setOpened] = useState(false);
     const [selected, setSelected] = useState([]);
 
-    console.log(children)
-
     let img;
     switch (opened) {
         case false:
@@ -40,7 +38,7 @@ export const DropdownChb = ({children, dis, placeholder, name, className, update
 
     useEffect(() => {
         console.log(selected);
-        // updateData(selected)
+        updateData(selected)
     }, [selected])
 
 
@@ -53,10 +51,9 @@ export const DropdownChb = ({children, dis, placeholder, name, className, update
                     {!dis && <img src={img} />}
                 </div>
                 <div className={`dropdownChb-content ${!opened && 'hidden'}`} onClick={evt => handleChange(evt.target.getAttribute('name'))}>
-                    {children.map(el => <Checkbox className="dropdownChb-content-el" text={el.props.text} />)}
+                    {children.map(el => <Checkbox className="dropdownChb-content-el" text={el.props.text} valEn={el.props.valEn} />)}
                 </div>
             </div>
         </div>
-
     )
 }

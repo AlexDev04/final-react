@@ -50,7 +50,7 @@ export const UserPage = observer(() => {
                 <div className="userPage-right">
                     <h3 className="placeholder">Задачи</h3>
                     <section className="userPage-right-tasks">
-                        {tasks && tasks.map(el => <TaskListItem type={el.type} taskName={el.name} status={el.status} rank={el.rank} />)}
+                        {tasks && tasks.map(el => <TaskListItem type={el.type} taskName={el.title} status={el.status} rank={el.rank} />)}
                     </section>
                     <Pager mode="userPage" id={id} />
                 </div>

@@ -57,6 +57,13 @@ export const api = {
                 limit: limit
               })
         },
+        filter(page, limit, filter) {
+            return axios.post('/tasks', {
+                filter: filter,
+                page: page,
+                limit: limit
+            })
+        },
         id(id) {
             return axios.get(`/tasks/${id}`)
         },
@@ -99,7 +106,7 @@ export const api = {
                 comment: comment,
                 currentUser: userId
             })
-        }
+        },
     },
 
     comments: {

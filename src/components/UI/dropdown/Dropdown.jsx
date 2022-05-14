@@ -3,19 +3,27 @@ import './Dropdown.sass';
 import '../../../_styles/style.sass'
 import closedDropdown from '../../../_images/closedDropdown.svg';
 import openedDropdown from '../../../_images/openedDropdown.svg';
-import { values } from "mobx";
 
 
 export const Dropdown = ({children, name, dis, className, val, valEn, id, updateData}) => {
 
+    const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+
     const [opened, setOpened] = useState(false);
-    const [selected, setSelected] = useState({ru: val , en: valEn, id: id});
+    const [selected, setSelected] = useState({ru: '', en: ''});
+
+    useEffect(() => {
+        setSelected({ru: '', en: ''});
+        console.log(val, valEn, id);
+        setSelected({ru: val , en: valEn, id: id})
+    }, [])
+
+    useEffect(() => setSelected({ru: val , en: valEn, id: id}), [val, valEn, id])
 
     const ChildrenEl = () => 
         React.Children.map(children, child => 
             React.cloneElement(child, {
                 className: `${child.props.className} dropdown-content-el ${selected !== undefined? child.props.children === selected.ru && 'dropdown-content-el-active': ''}`
-
             })
         );
 

@@ -132,12 +132,22 @@ class Store {
                         console.log(response);
                     })
             },
-            pagination(page, limit) {
-                api.tasks.all(page, limit)
-                    .then(response => {
-                        store.tasksPag = response.data
-                        console.log(response);
-                    })
+            pagination(page, limit, filter) {
+                if(filter) {
+                    api.tasks.filter(page, limit, filter)
+                        .then(response => {
+                            store.tasksPag = response.data
+                            console.log(response);
+                        })
+                }
+                else{
+                    api.tasks.all(page, limit)
+                        .then(response => {
+                            store.tasksPag = response.data
+                            console.log(response);
+                        })
+                }
+
             },
             id(id) {
                 api.tasks.id(id)

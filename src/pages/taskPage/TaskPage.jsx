@@ -22,14 +22,17 @@ export const TaskPage = observer(({mode}) => {
     useEffect(() => {
         store.data.tasks.id(id);
         console.log(store.openedTask);
+        console.log(task);
         if(!store.authorized) {
             navigate('/auth')
-        }
-        store.data.users.all()
-        console.log(store.openedTask.assigned)
+        };
+        store.data.users.all();
+        console.log(task)
     }, [store.openedTask])
 
-    useEffect(() => store.data.tasks.id(id), [])
+    useEffect(() => {
+        store.data.tasks.id(id);
+    }, [])
 
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
@@ -89,7 +92,7 @@ export const TaskPage = observer(({mode}) => {
                 )
                 }}
                 id={task.id}
-                />
+            />
             <main className="taskPage">
 
                 {/* Создание и редактирование задачи */}
@@ -100,18 +103,19 @@ export const TaskPage = observer(({mode}) => {
                         <label>Исполнитель</label>
                         <Dropdown 
                             name="Исполнитель" 
-                            val={store.openedTask.assigned} 
-                            valEn={store.openedTask.assigned}
-                            id={store.openedTask.assignedId}
+                            val={task.assigned}
+                            valEn={task.assigned}
+                            id={task.assignedId}
                             updateData={updateAssigned}
                         >
                             {store.users.map(user => <div key={user.id} name={user.username} id={user.id}>{user.username}</div>)}
                         </Dropdown>
+                        <p>{task.assigned}</p>
                         <label>Тип запроса</label>
                         <Dropdown 
                             name="Тип запроса" 
-                            val={store.openedTask.typeRu} 
-                            valEn={store.openedTask.type}
+                            val={task.typeRu} 
+                            valEn={task.type}
                             id=''
                             updateData={updateType}
                         >
@@ -121,8 +125,8 @@ export const TaskPage = observer(({mode}) => {
                         <label>Приоритет</label>
                         <Dropdown 
                             name="Приоритет" 
-                            val={store.openedTask.rankRu} 
-                            valEn={store.openedTask.rank}
+                            val={task.rankRu} 
+                            valEn={task.rank}
                             id=''
                             updateData={updateRank}
                         >
@@ -138,14 +142,14 @@ export const TaskPage = observer(({mode}) => {
                             type="primary" 
                             updateData={updateTitle}
                         >
-                            {store.openedTask.title}
+                            {task.title}
                         </TextInput>
                         <label>Описание</label>
                         <TextZone 
                             type="primary" 
                             updateData={updateDescription}
                         >
-                            {store.openedTask.description}
+                            {task.description}
                         </TextZone>
                     </section>
                     <section className="taskPage-right">

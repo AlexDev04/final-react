@@ -9,16 +9,42 @@ import { useNavigate } from "react-router";
 export const TaskList = observer(() => {
 
     const [tasks, setTasks] = useState([]);
-    const [filter, setFilter] = useState({type: [], title: '', user: [], status: [], rank: []})
+    const [filter, setFilter] = useState({})
 
     const updateType = (val) => {
         setFilter({...filter, type: val})
         console.log(filter)
     }
 
+    const updateTitle = (val) => {
+        setFilter({...filter, query: val})
+        console.log(filter)
+    }
+
+    const updateUsers = (val) => {
+        setFilter({...filter, assignedUsers: val})
+        console.log(filter)
+    }
+
+    const updateStatus = (val) => {
+        setFilter({...filter, status: val})
+        console.log(filter)
+    }
+
+    const updateRank = (val) => {
+        setFilter({...filter, rank: val})
+        console.log(filter)
+    }
+
+    const handleApply = () => {
+        console.log(filter);
+        store.data.tasks.pagination(0, 10, filter)
+    }
+
     useEffect(() => {
         store.data.tasks.pagination(0, 10);
-        console.log(store.tasksPag.data)
+        store.data.users.all();
+        console.log(store.tasksPag.data);
         setTasks(store.tasksPag.data)
     }, [])
 
@@ -52,22 +78,38 @@ export const TaskList = observer(() => {
                         placeholder="Название задачи"
                         type="primary"
                         className="taskList-sorting-name"
+                        updateData={updateTitle}
                     />
-                    <DropdownChb name="Пользователь" className="taskList-sorting-username">
-                        <Checkbox text="Малыш Грут" valEn="Малыш Грут" />
-                        <Checkbox text="Малыш Грут" valEn="Малыш Грут" />
+                    <DropdownChb 
+                        name="Пользователь" 
+                        className="taskList-sorting-username"
+                        updateData={updateUsers}
+                    >
+                        {store.users.map(el => <Checkbox text={el.username} valEn={el.id} />)}
                     </DropdownChb>
-                    <DropdownChb name="Статус" className="taskList-sorting-status">
+                    <DropdownChb 
+                        name="Статус" 
+                        className="taskList-sorting-status"
+                        updateData={updateStatus}
+                    >
                         <Checkbox text="Открыто" valEn="opened" />
                         <Checkbox text="В работе" valEn="inProgress" />
                         <Checkbox text="Тестируется" valEn="testing" />
                     </DropdownChb>
-                    <DropdownChb name="Приоритет" className="taskList-sorting-priority">
+                    <DropdownChb 
+                        name="Приоритет" 
+                        className="taskList-sorting-priority"
+                        updateData={updateRank}
+                    >
                         <Checkbox text="Высокий" valEn="high" />
                         <Checkbox text="Средний" valEn="middle" />
                         <Checkbox text="Низкий" valEn="low" />
                     </DropdownChb>
-                    <But type="primary" className="taskList-sorting-apply">Применить</But>
+                    <But 
+                        type="primary" 
+                        className="taskList-sorting-apply"
+                        onClick={handleApply}
+                    >Применить</But>
                 </section>
                 <section className="taskList-list">
 
@@ -85,7 +127,7 @@ export const TaskList = observer(() => {
                     }
 
                 </section>
-                <Pager className="taskList-pager" mode="taskList" />
+                <Pager className="taskList-pager" mode="taskList" filter={filter} />
             </main>
         </>
     )
