@@ -37,7 +37,11 @@
 
         &-tasks
             width: 100%
+            overflow-y: scroll
             @include board()
+
+            &-item-grayed
+                background-color: #F2F2F2
 
             .taskListItem
                 justify-content: space-between

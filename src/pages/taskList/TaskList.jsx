@@ -115,6 +115,7 @@ export const TaskList = observer(() => {
 
                     {tasks && tasks.map(el =>
                     <TaskListItem
+                        className={`taskList-list-item ${tasks.indexOf(el) % 2 == 0 && 'taskList-list-item-grayed'}`}
                         key={el.id}
                         type={el.type}
                         taskName={el.title}

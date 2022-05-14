@@ -37,7 +37,14 @@ export const UserList = observer(() => {
             <UserHeader mode="userList" />
             <main className="userList">
             <section className="userList-list">
-                {users && users.map(el => <article key={el.id} onClick={() => handleNav(el.id)}>{el.username}</article>)}
+                {users && users.map(el => 
+                <article 
+                    key={el.id} 
+                    onClick={() => handleNav(el.id)}
+                    className={`${users.indexOf(el) % 2 == 0 && 'userList-list-item-grayed'} userList-list-item`}
+                >
+                    {el.username}
+                </article>)}
             </section>
                 <Pager className="userList-pager" mode="userList" />
             </main>

@@ -4,7 +4,7 @@ import { TaskType, TaskStatus, TaskRank, More } from "../";
 import "./TaskListItem.sass";
 
 
-export const TaskListItem = ({type, taskName, userName, status, rank, id, more}) => {
+export const TaskListItem = ({className, type, taskName, userName, status, rank, id, more}) => {
 
     const navigate = useNavigate();
 
@@ -13,7 +13,7 @@ export const TaskListItem = ({type, taskName, userName, status, rank, id, more})
     }
 
     return(
-        <article className="taskListItem">
+        <article className={`taskListItem ${className}`}>
                 <div className="taskListItem-type">
                     <TaskType type={type} />
                 </div>
