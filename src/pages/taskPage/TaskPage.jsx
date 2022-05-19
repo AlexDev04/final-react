@@ -1,7 +1,8 @@
 import React, { useState, useReducer, useEffect } from "react";
+import moment from "moment";
 import { useNavigate, useParams } from "react-router";
-import { Dropdown, TaskHeader, TextInput, TextZone, But, Modal } from "../../components"
-import "./TaskPage.sass"
+import { Dropdown, TaskHeader, TextInput, TextZone, But, Modal } from "../../components";
+import "./TaskPage.sass";
 import { observer } from "mobx-react-lite";
 import { modal, store } from "../../store";
 
@@ -172,9 +173,9 @@ export const TaskPage = observer(({mode}) => {
                         <p className="placeholder">Приоритет</p>
                         <p>{store.openedTask.rank}</p>
                         <p className="placeholder">Дата создания</p>
-                        <p>{store.openedTask.dateOfCreation}</p>
+                        <p>{moment(store.openedTask.dateOfCreation).format('DD.MM.YYYY, hh:mm')}</p>
                         <p className="placeholder">Дата изменения</p>
-                        <p>{store.openedTask.dateOfUpdate}</p>
+                        <p>{moment(store.openedTask.dateOfUpdate).format('DD.MM.YYYY, hh:mm')}</p>
                         <p className="placeholder">Затрачено времени</p>
                         <p>{store.openedTask.timeInMinutes}</p>
                         <But type="primary"  onClick={handleOpen}>Сделать запись о работе</But>
@@ -189,20 +190,23 @@ export const TaskPage = observer(({mode}) => {
                         <p className="placeholder">Комментарии({store.openedTask.comments.length})</p>
                         <TextZone placeholder="Текст комментария" type="primary" updateData={updateCommentText}>{commentText}</TextZone>
                         <But type="success" onClick={handleAddComment}>Добавить комментарий</But>
-                        {store.openedTask.comments.map(el => 
-                            <div key={el.id} className="comment">
-                                <div className="comment-header">
-                                    <p className="placeholder">{
-                                        store.users.find(user => user.id === el.userId).username
-                                    }</p>
-                                    {el.userId === store.curUser.id &&
-                                        <p className="comment-header-del" onClick={() => deleteCom(el.id)}>Удалить</p>
-                                    }
-                                </div>
+                        <div className="comments">
+                            {store.openedTask.comments.map(el => 
+                                <div key={el.id} className="comments-item">
+                                    <div className="comments-item-header">
+                                        <p className="placeholder">{
+                                            store.users.find(user => user.id === el.userId).username
+                                        }</p>
+                                        {el.userId === store.curUser.id &&
+                                            <p className="comments-item-header-del" onClick={() => deleteCom(el.id)}>Удалить</p>
+                                        }
+                                    </div>
 
-                                <p>{el.text}</p>
-                            </div>
-                        )}
+                                    <p>{el.text}</p>
+                                </div>
+                            )}
+                        </div>
+
                         {/* <p className="placeholder">Шерлок Холмс (27.03.22 17:42)</p>
                         <p>Я так не думаю</p> */}
                     </section>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './TextInput.sass';
 
 
@@ -7,9 +7,13 @@ export const TextInput = ({type, placeholder, children, className, updateData, i
     let dis;
     type === 'disabled'? dis = true: dis = false;
 
-    if(children === undefined) children = '';
+    // if(children === undefined) children = '';
 
     const [text, setText] = useState(children)
+
+    useEffect(() => {
+        setText(children)
+    })
 
     const handleChange = (evt) => {
         evt.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './TextZone.sass';
 
 
@@ -10,6 +10,10 @@ export const TextZone = ({type, placeholder, children, updateData}) => {
     if(children === undefined) children = '';
 
     const [text, setText] = useState(children)
+
+    useEffect(() => {
+        setText(children)
+    })
 
     const handleChange = (evt) => {
         evt.preventDefault();

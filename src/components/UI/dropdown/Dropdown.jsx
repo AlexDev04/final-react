@@ -16,9 +16,9 @@ export const Dropdown = ({children, name, dis, className, val, valEn, id, update
         setSelected({ru: '', en: ''});
         console.log(val, valEn, id);
         setSelected({ru: val , en: valEn, id: id})
-    }, [])
+    })
 
-    useEffect(() => setSelected({ru: val , en: valEn, id: id}), [val, valEn, id])
+    // useEffect(() => setSelected({ru: val , en: valEn, id: id}), [val, valEn, id])
 
     const ChildrenEl = () => 
         React.Children.map(children, child => 
