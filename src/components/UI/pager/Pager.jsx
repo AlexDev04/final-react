@@ -29,7 +29,7 @@ export const Pager = ({className, mode, id, filter}) => {
             pages: Math.ceil(store.openedUser.tasks.total / 10)
         })
         console.log(infoUP)
-    }, [store.openedUser]);
+    }, [store.openedUser.tasks]);
 
     useEffect(() => {
         setInfoUL({
