@@ -1,0 +1,57 @@
+@import '../../_styles/vars'
+    
+.taskPage
+    display: flex
+
+    label
+        margin: 0 5px
+        color: $label-text
+    
+    &-left
+        width: 25%
+
+    &-center
+        width: 50%
+        margin: 0 1%
+        overflow-y: auto
+
+        input
+            width: 95%
+
+        textarea
+            width: 95%
+            height: 80%
+
+    &-right
+        display: flex
+        flex-flow: column nowrap
+        width: 25%
+        margin: 0 0 0 1%
+
+        button
+            margin: 5px 0
+            align-self: flex-start
+
+.comments
+    flex-grow: 1
+    overflow-y: auto
+
+
+    &-item
+        display: flex
+        flex-flow: column nowrap
+
+        &:hover &-header-del
+            display: inline
+
+        &-header
+            display: flex
+            justify-content: space-between
+
+            &-del
+                display: none
+                color: $error
+
+                &:hover
+                    text-decoration: underline
+                    cursor: pointer

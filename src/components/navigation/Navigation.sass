@@ -1,0 +1,21 @@
+@import '../../_styles/vars'
+    
+.navigation
+    display: flex
+    align-items: center
+
+    &-link
+        display: flex
+        justify-content: center
+        align-items: center
+        text-decoration: none
+        color: $text-color
+        margin: 0 10px
+        height: 100%
+
+        &-active
+            margin-bottom: -2px
+            border-bottom: 2px solid $primary
+
+        &:hover
+            color: $primary

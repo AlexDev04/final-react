@@ -1,0 +1,26 @@
+@mixin rank($col)
+    display: flex
+    flex-flow: row nowrap
+    align-items: center
+    padding: 0px
+    color: $col
+    
+.rank-low
+    @include rank(#3CA961)
+
+    img
+        margin-right: 4px
+
+.rank-medium
+    @include rank(#E9B500)
+    
+    img
+        margin-right: 4px
+    
+
+.rank-high
+    @include rank(#D14343)
+
+    img
+        margin-right: 4px
+    

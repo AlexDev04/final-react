@@ -1,0 +1,38 @@
+@import '../../_styles/vars'
+    
+.modal
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    width: 100%
+    z-index: 9999
+    display: flex
+    justify-content: center
+    align-items: center
+    background: rgba(181, 181, 181, 0.35)
+
+    &-window
+        background-color: $background-accent
+        border: none
+        border-radius: 5px
+
+        &-content
+            padding: 0 30px
+
+            > input, textarea, p.placeholder
+                width: 100%
+
+            > div
+                width: 100%
+
+        h3
+            margin: 20px 30px
+        
+        &-footer
+            display: flex
+            justify-content: space-around
+
+            button
+                margin: 20px 5px
