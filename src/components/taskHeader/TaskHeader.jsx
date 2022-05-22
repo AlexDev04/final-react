@@ -76,7 +76,7 @@ export const TaskHeader = ({mode, primaryBut, id}) => {
                         </div>
                         <div>
                             <But type="primary" onClick={primaryBut}>Сохранить</But>
-                            <But type="default">Отмена</But>
+                            <But type="default" onClick={() => navigate('/tasks')}>Отмена</But>
                         </div>
                     </>
                 }
@@ -87,7 +87,7 @@ export const TaskHeader = ({mode, primaryBut, id}) => {
                         </div>
                         <div>
                             <But type="primary" onClick={primaryBut}>Сохранить</But>
-                            <But type="default">Отмена</But>
+                            <But type="default" onClick={() => navigate('/tasks')}>Отмена</But>
                         </div>
                     </>
                 }

@@ -9,17 +9,6 @@ export const More = ({className, id, mode}) => {
 
     const navigate = useNavigate();
 
-    const [open, setOpen] = useState(false)
-
-    const handleHover = () => {
-        console.log('hover')
-        setOpen(true)
-    }
-    const handleout = () => {
-        console.log('out')
-        setOpen(false)
-    }
-
     const handleEdit = () => {
         navigate(`/tasks/edit/${id}`)
     }
@@ -46,11 +35,7 @@ export const More = ({className, id, mode}) => {
 
     return (
         <div className={`${className} more`}>
-            <div
-                className="more-icon"
-                onMouseOver={handleHover} 
-                onMouseOut={handleout}
-            >
+            <div className="more-icon">
             </div>
             <div className="more-content">
                 <div onClick={handleEdit}>Редактировать</div>
@@ -77,9 +62,6 @@ export const More = ({className, id, mode}) => {
                 {mode === 'complete' && 
                     <div onClick={handleReOpen}>Переоткрыть</div>
                 }
-
-
-
             </div>
         </div>
 

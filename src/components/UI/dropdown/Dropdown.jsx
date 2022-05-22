@@ -7,8 +7,6 @@ import openedDropdown from '../../../_images/openedDropdown.svg';
 
 export const Dropdown = ({children, name, dis, className, val, valEn, id, updateData}) => {
 
-    const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
-
     const [opened, setOpened] = useState(false);
     const [selected, setSelected] = useState({ru: '', en: ''});
 
@@ -16,9 +14,7 @@ export const Dropdown = ({children, name, dis, className, val, valEn, id, update
         setSelected({ru: '', en: ''});
         console.log(val, valEn, id);
         setSelected({ru: val , en: valEn, id: id})
-    })
-
-    // useEffect(() => setSelected({ru: val , en: valEn, id: id}), [val, valEn, id])
+    }, [val, valEn, id])
 
     const ChildrenEl = () => 
         React.Children.map(children, child => 
@@ -54,7 +50,7 @@ export const Dropdown = ({children, name, dis, className, val, valEn, id, update
     return(
         <div className={`dropdown-outer ${className}`}  >
             <div className={`${opened && 'dropdown'} ${dis && 'dropdown-dis'}`} onClick={handleOpen}>
-                <div className={`${!dis && 'dropdown-label'} ${opened && 'dropdown-label-active'} ${selected && 'dropdown-label-active'}`}>
+                <div className={`${!dis && 'dropdown-label'} ${opened && 'dropdown-label-active'} ${selected.ru != undefined && 'dropdown-label-active'}`}>
                     <p>{selected.ru || name}</p>
                     {!dis && <img src={img} />}
                 </div>

@@ -1,12 +1,12 @@
 import React, { useEffect, useReducer, useState } from "react";
 import "./Modal.sass";
-import { TextInput, Dropdown, TextZone, But } from '../'
+import { TextInput, Dropdown, TextZone, But } from '../';
 import { observer } from "mobx-react-lite";
 import { action } from "mobx";
 import { modal, store } from "../../store";
 
 
-export const Modal = observer(({mode}) => {
+export const Modal = observer(({mode, id}) => {
 
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
@@ -28,9 +28,9 @@ export const Modal = observer(({mode}) => {
     }
     const handleEditUser = () => {
         console.log(user);
-        store.data.users.edit(user)
-        modal.close()
-        forceUpdate();
+        store.data.users.edit(user);
+        modal.close();
+        store.data.users.id(id)
     }
 
     const handleClose = action(() => {
@@ -43,7 +43,7 @@ export const Modal = observer(({mode}) => {
     console.log(modal.opened)
 
     const [value, setValue] = useState('minutes')
-    const [time, setTime] = useState({})
+    const [time, setTime] = useState({minutes: 0, hours: 0, days: 0, comment: ''})
 
     useEffect(() => console.log(value), [value])
 
@@ -66,23 +66,26 @@ export const Modal = observer(({mode}) => {
     }
 
     const handleAdd = () => {
-        console.log(time.minutes*1 + time.hours*1 * 60 + time.days*1 * 60 * 12)
-        const total = time.minutes*1 + time.hours*1 * 60 + time.days*1 * 60 * 12
-        store.data.tasks.addWorktimme(total, time.comment)
-        modal.close()
+        console.log(time.minutes*1 + time.hours*1 * 60 + time.days*1 * 60 * 12);
+        const total = time.minutes*1 + time.hours*1 * 60 + time.days*1 * 60 * 12;
+        store.data.tasks.addWorktimme(total, time.comment);
+        modal.close();
+        store.data.tasks.id(id)
     }
 
     return(
         <>
             {mode !== 'userPage'
             ?<>
-                <section className={modal.opened? 'modal': 'hidden'}>
-                    <div className="modal-window">
+                <section name="modal-outer" className={modal.opened? 'modal': 'hidden'}>
+                    <div name="modal" className="modal-window">
                         <h3>Modal</h3>
+
                         <hr />
+                        
                         <div className="modal-window-content">
                             <p className="placeholder">Затрачено времени</p>
-                            <TextInput type="primary" updateData={handleTime}>0</TextInput>
+                            <TextInput type="primary" updateData={val => handleTime(val)}></TextInput>
                             <p className="placeholder">Единица измерения</p>
                             <Dropdown type="primary" val="Минуты" updateData={val => setValue(val)}>
                                 <div name="minutes">Минуты</div>
@@ -90,10 +93,11 @@ export const Modal = observer(({mode}) => {
                                 <div name="days">Дни</div>
                             </Dropdown>
                             <p className="placeholder">Комментарий</p>
-                            <TextZone type="primary" updateData={handleComment} />
+                            <TextZone type="primary" updateData={handleComment}>{time.comment}</TextZone>
                         </div>
 
                         <hr />
+
                         <div className="modal-window-footer">
                             <But type="primary" onClick={handleAdd}>Добавить</But>
                             <But type="default" onClick={handleClose}>Отмена</But>
@@ -102,8 +106,8 @@ export const Modal = observer(({mode}) => {
                 </section>
             </>
             :<>
-                <section className={modal.opened? 'modal': 'hidden'}>
-                    <div className="modal-window">
+                <section name="modal-outer" className={modal.opened? 'modal': 'hidden'}>
+                    <div name="modal" className="modal-window">
                         <h3>Редактирование пользователя</h3>
                         <hr />
                         <div className="modal-window-content">

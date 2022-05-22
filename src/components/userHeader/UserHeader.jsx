@@ -11,7 +11,7 @@ export const UserHeader = observer(({mode}) => {
     const [user, setUser] = useState({});
     const navigate = useNavigate();
 
-    useEffect(() => setUser(store.openedUser), [store.openedUser])
+    useEffect(() => setUser(store.openedUser), [store.openedUser.username, store.openedUser.img, store.openedUser.id])
 
     console.log(store.openedUser.id)
     console.log(store.curUser.id)
@@ -29,7 +29,7 @@ export const UserHeader = observer(({mode}) => {
             {mode === 'user'
             ?<>
                 <div>
-                    <h2>{store.openedUser.username}</h2>
+                    <h2>{user.username}</h2>
                 </div>
                 <div>
                     <But type="default" onClick={() => navigate(`/tasks/create`)}>Добавить задачу</But>

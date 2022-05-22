@@ -10,21 +10,28 @@ export const UserProfile = observer(() => {
     const navigate = useNavigate();
 
     const [user, setUser] = useState({username: '', img: '', id: ''});
-    useEffect(() => setUser({username: store.curUser.username, img: userImg, id: store.curUser.id}), [store.authorized]);
+    useEffect(() => setUser({username: store.curUser.username, img: store.curUser.photoUrl, id: store.curUser.id}), [store.curUser.username, store.curUser.img, store.curUser.id]);
 
     const handleUser = () => {
+        console.log('to user page');
         navigate(`/users/${user.id}`)
     }
 
-    console.log(store.curUser.photoUrl)
-    const userImg = store.curUser.photoUrl
+    const handleLogout = () => {
+        console.log('log out');
+        store.data.users.logout();
+        navigate('/auth')
+    }
 
     return(
-        <div className="userProfile" onClick={handleUser}>
+        <div className="userProfile">
             <p>{user.username}</p>
-
-            <div>
+            <div className="userProfile-icon">
                 <img src={user.img} />
+            </div>
+            <div className="userProfile-content">
+                <p onClick={handleUser}>Посмотреть профиль</p>
+                <p className="userProfile-content-out" onClick={handleLogout}>Выйти из системы</p>
             </div>
         </div>
     )

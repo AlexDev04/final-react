@@ -45,8 +45,8 @@ export const DropdownChb = ({children, dis, placeholder, name, className, update
 
     return(
         <div className={`dropdownChb-outer ${className}`}>
-            <div className={`${opened && 'dropdownChb'} ${dis && 'dropdownChb-dis'}`}>
-                <div className={!dis && 'dropdownChb-label'} onClick={handleOpen}>
+            <div className={`${opened && 'dropdownChb'}  ${dis && 'dropdownChb-dis'}`}>
+                <div className={`${!dis && 'dropdownChb-label'} ${selected.length && 'dropdownChb-label-active'}`} onClick={handleOpen}>
                     <p>{name}</p>
                     {!dis && <img src={img} />}
                 </div>

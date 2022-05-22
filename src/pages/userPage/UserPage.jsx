@@ -57,6 +57,7 @@ export const UserPage = observer(() => {
                             taskName={el.title}
                             status={el.status}
                             rank={el.rank}
+                            id={el.id}
                         />)}
                     </section>
                     <Pager mode="userPage" id={id} />

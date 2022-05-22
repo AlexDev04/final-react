@@ -102,7 +102,7 @@ export const TaskList = observer(() => {
                         updateData={updateRank}
                     >
                         <Checkbox text="Высокий" valEn="high" />
-                        <Checkbox text="Средний" valEn="middle" />
+                        <Checkbox text="Средний" valEn="medium" />
                         <Checkbox text="Низкий" valEn="low" />
                     </DropdownChb>
                     <But 
@@ -119,7 +119,7 @@ export const TaskList = observer(() => {
                         key={el.id}
                         type={el.type}
                         taskName={el.title}
-                        userName={el.userId}
+                        userName={ store.users.find(user => user.id === el.assignedId).username}
                         status={el.status}
                         rank={el.rank}
                         id={el.id}

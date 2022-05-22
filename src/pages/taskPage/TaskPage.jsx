@@ -9,7 +9,9 @@ import { modal, store } from "../../store";
 
 export const TaskPage = observer(({mode}) => {
 
-    // if(mode === 'create') store.openedTask = {}
+    useEffect(() => {
+        if(mode === 'create') store.openedTask = {}
+    }, [])
 
     console.log(mode);
 
@@ -28,7 +30,8 @@ export const TaskPage = observer(({mode}) => {
             navigate('/auth')
         };
         store.data.users.all();
-        console.log(task)
+        console.log(task);
+        setTask(store.openedTask)
     }, [store.openedTask])
 
     useEffect(() => {
@@ -95,9 +98,6 @@ export const TaskPage = observer(({mode}) => {
                 id={task.id}
             />
             <main className="taskPage">
-
-                {/* Создание и редактирование задачи */}
-                
                 {mode !== 'task' &&
                 <>
                     <section className="taskPage-left">
@@ -111,7 +111,6 @@ export const TaskPage = observer(({mode}) => {
                         >
                             {store.users.map(user => <div key={user.id} name={user.username} id={user.id}>{user.username}</div>)}
                         </Dropdown>
-                        <p>{task.assigned}</p>
                         <label>Тип запроса</label>
                         <Dropdown 
                             name="Тип запроса" 
@@ -158,20 +157,18 @@ export const TaskPage = observer(({mode}) => {
                 </>
                 }
 
-                {/* Просмотр задачи */}
-
                 {mode === 'task' && 
                 <>
-                    <Modal />
+                    <Modal mode="taskPage" id={task.id} />
                     <section className="taskPage-left">
                         <p className="placeholder">Исполнитель</p>
                         <p>{store.openedTask.assigned}</p>
                         <p className="placeholder">Автор задачи</p>
                         <p>{store.openedTask.user}</p>
                         <p className="placeholder">Тип запроса</p>
-                        <p>{store.openedTask.type}</p>
+                        <p>{store.openedTask.typeRu}</p>
                         <p className="placeholder">Приоритет</p>
-                        <p>{store.openedTask.rank}</p>
+                        <p>{store.openedTask.rankRu}</p>
                         <p className="placeholder">Дата создания</p>
                         <p>{moment(store.openedTask.dateOfCreation).format('DD.MM.YYYY, hh:mm')}</p>
                         <p className="placeholder">Дата изменения</p>
@@ -195,7 +192,8 @@ export const TaskPage = observer(({mode}) => {
                                 <div key={el.id} className="comments-item">
                                     <div className="comments-item-header">
                                         <p className="placeholder">{
-                                            store.users.find(user => user.id === el.userId).username
+                                            store.users.find(user => user.id === el.userId).username + ' (' +
+                                            moment(el.dateOfCreation).format('DD.MM.YYYY, hh:mm') + ')'
                                         }</p>
                                         {el.userId === store.curUser.id &&
                                             <p className="comments-item-header-del" onClick={() => deleteCom(el.id)}>Удалить</p>
@@ -206,9 +204,6 @@ export const TaskPage = observer(({mode}) => {
                                 </div>
                             )}
                         </div>
-
-                        {/* <p className="placeholder">Шерлок Холмс (27.03.22 17:42)</p>
-                        <p>Я так не думаю</p> */}
                     </section>
                 </>
                 }

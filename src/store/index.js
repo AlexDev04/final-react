@@ -121,7 +121,24 @@ class Store {
                     .then(response => {
                         console.log(response);
                         console.log(user)
+                        store.curUser.id = response.data.id
+                        store.curUser.username = response.data.username
+                        store.curUser.login = response.data.login
+                        store.curUser.about = response.data.about
+                        store.curUser.photoUrl = response.data.photoUrl
+                        store.data.users.id(user.id)
                     })
+            },
+            logout() {
+                store.curUser = {
+                    id: '',
+                    username: '',
+                    login: '',
+                    about: '',
+                    photoUrl: '',
+                    password: ''
+                };
+                store.authorized = false
             }
         },
         tasks: {
