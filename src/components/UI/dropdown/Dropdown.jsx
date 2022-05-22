@@ -11,10 +11,9 @@ export const Dropdown = ({children, name, dis, className, val, valEn, id, update
     const [selected, setSelected] = useState({ru: '', en: ''});
 
     useEffect(() => {
-        setSelected({ru: '', en: ''});
-        console.log(val, valEn, id);
-        setSelected({ru: val , en: valEn, id: id})
-    }, [val, valEn, id])
+        setSelected({ru: '', en: '', id: ''});
+        setSelected({ru: val, en: valEn, id: id})
+    }, [])
 
     const ChildrenEl = () => 
         React.Children.map(children, child => 
@@ -38,9 +37,10 @@ export const Dropdown = ({children, name, dis, className, val, valEn, id, update
     }
 
     const handleChange = (evt) => {
+        console.log(evt.target)
         if(!dis)setSelected({ru: evt.target.innerHTML, en: evt.target.getAttribute('name'), id: evt.target.id})
         console.log({ru: evt.target.innerHTML, en: evt.target.getAttribute('name'), id: evt.target.id})
-        console.log(selected.id)
+        console.log(selected.ru)
         console.log(evt.target.innerHTML, evt.target.id)
         if(evt.target.id !== '') updateData(evt.target.innerHTML, evt.target.id)
         else if(evt.target.id === '') updateData(evt.target.getAttribute('name'))
