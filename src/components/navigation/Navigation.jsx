@@ -20,7 +20,7 @@ export const Navigation = () => {
                 to="/users" 
                 className={`navigation-link ${path === '/users' && 'navigation-link-active'}`} 
             >
-                <p>Сотрудники</p>
+                <p>Пользователи</p>
             </NavLink>
         </nav>
     )

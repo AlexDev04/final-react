@@ -2,12 +2,16 @@ import React from 'react';
 import './MainHeader.sass';
 import logo from '../../_images/Logo.svg';
 import { Navigation, UserProfile } from '../';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
+import { observer } from 'mobx-react-lite';
+import { store } from '../../store';
 
 
-export const MainHeader = () => {
+export const MainHeader = observer(() => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    const { pathname } = useLocation();
 
     const home = () => {
         navigate('/')
@@ -16,8 +20,13 @@ export const MainHeader = () => {
     return(
         <header className="mainHeader">
             <img src={logo} onClick={home} />
-            <Navigation />
-            <UserProfile />
+            {!pathname.startsWith('/auth') &&
+            <>
+                <Navigation />
+                <UserProfile />
+            </>
+            }
+
         </header>
     )
-}
+})

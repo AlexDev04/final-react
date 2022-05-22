@@ -3,7 +3,6 @@
 
 @mixin input()
     height: 24px
-    margin: 0 5px
 
 .textInput-error
     outline: none
@@ -15,7 +14,8 @@
         border: none
 
         &:hover
-            margin: 0 4px
+            margin-left: -1px
+            margin-right: -1px
             @include textArea($error)
 
     &:focus
@@ -34,7 +34,8 @@
         border: none
 
         &:hover
-            margin: 0 4px
+            margin-left: -1px
+            margin-right: -1px
             @include textArea($success)
 
     &:focus
@@ -53,7 +54,8 @@
         border: none
 
         &:hover
-            margin: 0 4px
+            margin-left: -1px
+            margin-right: -1px
             @include textArea($primary)
 
     &:focus

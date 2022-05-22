@@ -18,14 +18,16 @@ export const Authorization = observer(() => {
     };
 
     const updatePassword = (value) => {
-        setAuthData({...authData, password: value})
+        setAuthData({...authData, password: value});
+        store.curUser.password = value
     };
 
     const handleAuth = action(() => {
         store.data.users.login(authData)
     });
 
-    console.log(store.authorized)
+    console.log(store.authorized);
+    console.log(store.curUser);
     store.authorized && navigate('/');
 
     return(
@@ -33,9 +35,9 @@ export const Authorization = observer(() => {
             <div className="auth-window">
                 <h2>Авторизация</h2>
                 <p className="placeholder">Логин</p>
-                <TextInput type="primary" updateData={updateLogin}/>
+                <TextInput type="primary" updateData={updateLogin} />
                 <p className="placeholder">Пароль</p>
-                <TextInput type="primary" updateData={updatePassword} />
+                <TextInput type="primary" updateData={updatePassword} info="password" />
                 <But type="success" onClick={handleAuth}>Вход</But>
             </div>
         </section>

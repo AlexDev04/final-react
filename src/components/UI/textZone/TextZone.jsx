@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './TextZone.sass';
 
 
-export const TextZone = ({type, placeholder, children}) => {
+export const TextZone = ({type, placeholder, children, updateData}) => {
 
     let dis;
     type === 'disabled'? dis = true: dis = false;
@@ -11,10 +11,15 @@ export const TextZone = ({type, placeholder, children}) => {
 
     const [text, setText] = useState(children)
 
+    useEffect(() => {
+        setText(children)
+    })
+
     const handleChange = (evt) => {
         evt.preventDefault();
         setText(evt.target.value);
         evt.target.focus();
+        updateData(evt.target.value)
     }
 
     return(

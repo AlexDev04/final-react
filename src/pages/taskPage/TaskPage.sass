@@ -22,12 +22,35 @@
             height: 80%
 
     &-right
+        display: flex
+        flex-flow: column nowrap
         width: 25%
         margin: 0 0 0 1%
 
-        textarea
-            margin: 5px
-            
         button
-            margin: 5px
-            
+            margin: 5px 0
+            align-self: flex-start
+
+.comments
+    flex-grow: 1
+    overflow-y: auto
+
+
+    &-item
+        display: flex
+        flex-flow: column nowrap
+
+        &:hover &-header-del
+            display: inline
+
+        &-header
+            display: flex
+            justify-content: space-between
+
+            &-del
+                display: none
+                color: $error
+
+                &:hover
+                    text-decoration: underline
+                    cursor: pointer

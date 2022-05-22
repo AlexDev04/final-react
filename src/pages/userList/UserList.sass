@@ -7,6 +7,17 @@
         width: 100%
         height: 90%
         @include board()
+        overflow-y: scroll
+
+        &-item
+            display: flex
+            align-items: center
+            height: 68px
+            color: #000000
+            padding: 0 10px
+
+            &-grayed
+                background-color: #F2F2F2
 
     &-pager
         height: 10%

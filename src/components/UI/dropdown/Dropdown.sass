@@ -1,11 +1,22 @@
 @import '../../../_styles/vars'
 
 .dropdown
+    display: flex
+    flex-flow: column nowrap
+    align-items: center
     font-size: 14px
     border: 1px solid $primary
+    z-index: 999
+    background-color: $background-accent
     box-sizing: border-box
     box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5)
     border-radius: 3px
+    width: 100%
+    position: absolute
+
+    &-outer
+        position: relative
+        height: 34px
 
     &-dis
         border: none
@@ -14,6 +25,7 @@
         color: $label-text
         border-radius: 3px
         padding: 5px 10px
+        position: absolute
 
     &-label
         color: $label-text
@@ -30,6 +42,8 @@
         border-radius: 3px
         margin: 5px
         height: 24px
+        position: absolute
+        width: 95%
 
         &:hover
             color: $text-color
@@ -50,7 +64,10 @@
             width: auto
     
     &-content
-        margin: 3px 0
+        width: 100%
+        max-height: 60vh
+        margin: 30px 0 3px
+        overflow-y: auto
 
         &-el
             padding: 4px 5.5px

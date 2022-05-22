@@ -1,104 +1,209 @@
 import React, { useState, useReducer, useEffect } from "react";
-import { useNavigate } from "react-router";
-import { Dropdown, TaskHeader, TextInput, TextZone, But, Modal } from "../../components"
-import "./TaskPage.sass"
-import { action } from "mobx";
+import moment from "moment";
+import { useNavigate, useParams } from "react-router";
+import { Dropdown, TaskHeader, TextInput, TextZone, But, Modal } from "../../components";
+import "./TaskPage.sass";
 import { observer } from "mobx-react-lite";
 import { modal, store } from "../../store";
 
 
 export const TaskPage = observer(({mode}) => {
 
+    useEffect(() => {
+        if(mode === 'create') store.openedTask = {}
+    }, [])
+
     console.log(mode);
 
+    const [commentText, setCommentText] = useState();
+
+    const [task, setTask] = useState(store.openedTask);
+
+    const { id } = useParams();
     const navigate = useNavigate();
+
     useEffect(() => {
+        store.data.tasks.id(id);
+        console.log(store.openedTask);
+        console.log(task);
         if(!store.authorized) {
             navigate('/auth')
-        }
-    })
+        };
+        store.data.users.all();
+        console.log(task);
+        setTask(store.openedTask)
+    }, [store.openedTask])
+
+    useEffect(() => {
+        store.data.tasks.id(id);
+    }, [])
 
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
-    const handleOpen = action(() => {
+    const handleOpen = () => {
         modal.open()
         forceUpdate()
-        console.log(modal.opened)
-    })
+    }
+
+    const updateCommentText = (value) => {
+        setCommentText(value);
+    }
+
+    const handleAddComment = () => {
+        store.data.comments.add(commentText)
+        store.data.tasks.id(id)
+        setCommentText('')
+    }
+
+    const updateAssigned = (val, id) => {
+        console.log(val, id)
+        setTask({...task, assigned: val, assignedId: id })
+    }
+
+    const updateRank = (val) => {
+        setTask({...task, rank: val})
+    }
+
+    const updateType = (val) => {
+        setTask({...task, type: val})
+    }
+
+    const updateTitle = (val) => {
+        setTask({...task, title: val})
+    }
+
+    const updateDescription = (val) => {
+        setTask({...task, description: val})
+    }
+
+    const deleteCom = (comId) => {
+        store.data.comments.delete(comId)
+        store.data.tasks.id(id)
+    }
+
+    console.log(task)
 
     return(
         <>
-            <TaskHeader mode={mode} />
+            <TaskHeader 
+                mode={mode}
+                primaryBut={() => {
+                if(mode === 'edit') store.data.tasks.edit(
+                task.id, task.userId, task.assignedId, task.title, task.description, task.type, task.dateOfCreation, task.dateOfUpdate, task.timeInMinutes, task.status, task.rank
+                )
+                if(mode==='create') store.data.tasks.add(
+                    task.assignedId, task.title, task.description, task.rank, task.type,
+                )
+                }}
+                id={task.id}
+            />
             <main className="taskPage">
-
-                {/* Создание и редактирование задачи */}
-                
                 {mode !== 'task' &&
                 <>
                     <section className="taskPage-left">
                         <label>Исполнитель</label>
-                        <Dropdown name="Исполнитель">
-                            <div>Малыш Грут</div>
-                            <div>Евгений онегин</div>
+                        <Dropdown 
+                            name="Исполнитель" 
+                            val={task.assigned}
+                            valEn={task.assigned}
+                            id={task.assignedId}
+                            updateData={updateAssigned}
+                        >
+                            {store.users.map(user => <div key={user.id} name={user.username} id={user.id}>{user.username}</div>)}
                         </Dropdown>
                         <label>Тип запроса</label>
-                        <Dropdown name="Тип запроса">
-                            <div>Задача</div>
-                            <div>Баг</div>
+                        <Dropdown 
+                            name="Тип запроса" 
+                            val={task.typeRu} 
+                            valEn={task.type}
+                            id=''
+                            updateData={updateType}
+                        >
+                            <div name="task">Задача</div>
+                            <div name="bug">Баг</div>
                         </Dropdown>
                         <label>Приоритет</label>
-                        <Dropdown name="Приоритет">
-                            <div>Низкий</div>
-                            <div>Средний</div>
-                            <div>Высокий</div>
+                        <Dropdown 
+                            name="Приоритет" 
+                            val={task.rankRu} 
+                            valEn={task.rank}
+                            id=''
+                            updateData={updateRank}
+                        >
+                            <div name="low">Низкий</div>
+                            <div name="medium">Средний</div>
+                            <div name="high">Высокий</div>
                         </Dropdown>
                     </section>
                     <hr />
                     <section className="taskPage-center">
                         <label>Название</label>
-                        <TextInput type="primary" placeholder="Название" />
+                        <TextInput 
+                            type="primary" 
+                            updateData={updateTitle}
+                        >
+                            {task.title}
+                        </TextInput>
                         <label>Описание</label>
-                        <TextZone type="primary" placeholder="Описание" />
+                        <TextZone 
+                            type="primary" 
+                            updateData={updateDescription}
+                        >
+                            {task.description}
+                        </TextZone>
                     </section>
                     <section className="taskPage-right">
                     </section>
                 </>
                 }
 
-                {/* Просмотр задачи */}
-
                 {mode === 'task' && 
                 <>
-                    <Modal />
+                    <Modal mode="taskPage" id={task.id} />
                     <section className="taskPage-left">
-                        <p className="taskPage-placeholder">Исполнитель</p>
-                        <p>Евгений Онегин</p>
-                        <p className="taskPage-placeholder">Автор задачи</p>
-                        <p>Доктор Ватсон</p>
-                        <p className="taskPage-placeholder">Тип запроса</p>
-                        <p>Задача</p>
-                        <p className="taskPage-placeholder">Приоритет</p>
-                        <p>Низкий</p>
-                        <p className="taskPage-placeholder">Дата создания</p>
-                        <p>01.12.2021 12:12</p>
-                        <p className="taskPage-placeholder">Дата изменения</p>
-                        <p>01.12.2021 12:20</p>
-                        <p className="taskPage-placeholder">Затрачено времени</p>
-                        <p>0 часов 0 минут</p>
+                        <p className="placeholder">Исполнитель</p>
+                        <p>{store.openedTask.assigned}</p>
+                        <p className="placeholder">Автор задачи</p>
+                        <p>{store.openedTask.user}</p>
+                        <p className="placeholder">Тип запроса</p>
+                        <p>{store.openedTask.typeRu}</p>
+                        <p className="placeholder">Приоритет</p>
+                        <p>{store.openedTask.rankRu}</p>
+                        <p className="placeholder">Дата создания</p>
+                        <p>{moment(store.openedTask.dateOfCreation).format('DD.MM.YYYY, hh:mm')}</p>
+                        <p className="placeholder">Дата изменения</p>
+                        <p>{moment(store.openedTask.dateOfUpdate).format('DD.MM.YYYY, hh:mm')}</p>
+                        <p className="placeholder">Затрачено времени</p>
+                        <p>{store.openedTask.timeInMinutes}</p>
                         <But type="primary"  onClick={handleOpen}>Сделать запись о работе</But>
                     </section>
                     <hr />
                     <section className="taskPage-center">
-                        <p className="taskPage-placeholder">Описание</p>
-                        <p>Какой-то текст задачи, например, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean imperdiet consectetur dolor, nec consectetur nisl mattis ut. Proin ac sapien at elit lacinia semper. Nullam vestibulum rutrum efficitur. Sed et egestas ante, id ullamcorper ante. Maecenas porta sem ultrices libero tempus, eu laoreet turpis bibendum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed laoreet est et nisi tristique, ut hendrerit tellus pulvinar. Proin eget elit a mauris convallis molestie nec vel nisi. Etiam accumsan porta velit et convallis. Maecenas euismod scelerisque lectus, non varius velit condimentum non. Vestibulum luctus risus et metus volutpat, at sodales massa gravida.</p>
+                        <p className="placeholder">Описание</p>
+                        <p>{store.openedTask.description}</p>
                     </section>
                     <hr />
                     <section className="taskPage-right">
-                        <p className="taskPage-placeholder">Комментарии(1)</p>
-                        <TextZone placeholder="Текст комментария" type="primary" />
-                        <But type="success">Добавить комментарий</But>
-                        <p className="taskPage-placeholder">Шерлок Холмс (27.03.22 17:42)</p>
-                        <p>Я так не думаю</p>
+                        <p className="placeholder">Комментарии({store.openedTask.comments.length})</p>
+                        <TextZone placeholder="Текст комментария" type="primary" updateData={updateCommentText}>{commentText}</TextZone>
+                        <But type="success" onClick={handleAddComment}>Добавить комментарий</But>
+                        <div className="comments">
+                            {store.openedTask.comments.map(el => 
+                                <div key={el.id} className="comments-item">
+                                    <div className="comments-item-header">
+                                        <p className="placeholder">{
+                                            store.users.find(user => user.id === el.userId).username + ' (' +
+                                            moment(el.dateOfCreation).format('DD.MM.YYYY, hh:mm') + ')'
+                                        }</p>
+                                        {el.userId === store.curUser.id &&
+                                            <p className="comments-item-header-del" onClick={() => deleteCom(el.id)}>Удалить</p>
+                                        }
+                                    </div>
+
+                                    <p>{el.text}</p>
+                                </div>
+                            )}
+                        </div>
                     </section>
                 </>
                 }

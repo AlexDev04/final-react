@@ -5,19 +5,19 @@ import './TaskStatus.sass';
 export const TaskStatus = ({status}) => {
 
     let col, text;
-    if(!status || status === 'open') {
+    if(!status || status === 'opened') {
         col = 'default';
         text = 'Открыто';
     }
-    if(status === 'work') {
+    if(status === 'inProgress') {
         col = 'yellow';
         text = 'В работе';
     };
-    if (status === 'test') {
+    if (status === 'testing') {
         col = 'yellow';
         text = 'Тестируется';
     } 
-    if(status === 'done') {
+    if(status === 'complete') {
         col = 'green';
         text = 'Сделано';
     }
