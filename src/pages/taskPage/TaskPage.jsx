@@ -174,7 +174,7 @@ export const TaskPage = observer(({mode}) => {
                         <p className="placeholder">Дата изменения</p>
                         <p>{moment(store.openedTask.dateOfUpdate).format('DD.MM.YYYY, hh:mm')}</p>
                         <p className="placeholder">Затрачено времени</p>
-                        <p>{store.openedTask.timeInMinutes}</p>
+                        <p>{store.openedTask.timeInMinutes} минут</p>
                         <But type="primary"  onClick={handleOpen}>Сделать запись о работе</But>
                     </section>
                     <hr />

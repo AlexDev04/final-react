@@ -1,8 +1,7 @@
 @import './vars.sass'
 
-// UI components
-
-@mixin emptyTextArea() 
+@mixin emptyTextArea()
+    font-family: Inter
     resize: none
     display: flex
     flex-direction: row
@@ -14,6 +13,7 @@
     border: none
 
 @mixin textArea($type)
+    font-family: Inter
     resize: none
     border: 1px solid $type
     box-sizing: border-box
