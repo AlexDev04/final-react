@@ -55,9 +55,9 @@ export const TaskList = observer(() => {
 
     const navigate = useNavigate()
     useEffect(() => {
-        if(!store.authorized) {
-            navigate('/auth')
-        }
+        // if(!store.authorized) {
+        //     navigate('/auth')
+        // }
         store.data.tasks.all()
     }, [])
 

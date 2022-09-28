@@ -22,9 +22,9 @@ export const UserList = observer(() => {
 
     const navigate = useNavigate()
     useEffect(() => {
-        if(!store.authorized) {
-            navigate('/auth')
-        }
+        // if(!store.authorized) {
+        //     navigate('/auth')
+        // }
         store.data.users.all()
     }, [])
 

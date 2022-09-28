@@ -26,9 +26,9 @@ export const TaskPage = observer(({mode}) => {
         store.data.tasks.id(id);
         console.log(store.openedTask);
         console.log(task);
-        if(!store.authorized) {
-            navigate('/auth')
-        };
+        // if(!store.authorized) {
+        //     navigate('/auth')
+        // };
         store.data.users.all();
         console.log(task);
         setTask(store.openedTask)
